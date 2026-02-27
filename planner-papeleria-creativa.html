@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planner Papelería Creativa ✿</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Pinkie palette exacta */
+    --p1: #FCBDD7;   /* rosa suave */
+    --p2: #EFA3C7;   /* rosa medio */
+    --p3: #FBDAE5;   /* rosa claro blush */
+    --p4: #96989A;   /* gris */
+    --p5: #E0E0E0;   /* gris claro */
+    --p6: #050505;   /* casi negro */
+
+    /* Aliases funcionales */
+    --cream: #fdf6f9;
+    --blush: var(--p3);
+    --pink: var(--p1);
+    --hot: var(--p2);
+    --deep: #c4698f;
+    --candy: var(--p2);
+    --lavender: #f7e8f0;
+    --bubblegum: var(--p3);
+    --sage: #8aab8e;
+    --sage-light: #d4e8d6;
+    --ink: var(--p6);
+    --ink-soft: var(--p4);
+    --gold-light: var(--p3);
+    --white: #ffffff;
+    --shadow: rgba(239,163,199,0.18);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #fdf6f9;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--ink);
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 90% 0%, #FBDAE5 0%, transparent 40%),
+      radial-gradient(ellipse at 0% 100%, #FCBDD7 0%, transparent 35%);
+  }
+
+  /* ─── HEADER PINKIE ─── */
+  header {
+    text-align: center;
+    padding: 0 0 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-hero {
+    background: linear-gradient(160deg, #FBDAE5 0%, #ffffff 50%, #FCBDD7 100%);
+    padding: 52px 24px 44px;
+    position: relative;
+    border-bottom: 3px solid #EFA3C7;
+  }
+  .header-deco {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-bottom: 24px;
+    font-size: 28px;
+    filter: drop-shadow(0 2px 6px rgba(239,163,199,0.4));
+  }
+  .header-deco span { animation: floatDeco 3s ease-in-out infinite; display: inline-block; }
+  .header-deco span:nth-child(2) { animation-delay: 0.5s; }
+  .header-deco span:nth-child(3) { animation-delay: 1s; }
+  .header-deco span:nth-child(4) { animation-delay: 1.5s; }
+  .header-deco span:nth-child(5) { animation-delay: 2s; }
+  @keyframes floatDeco { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+  .header-tag {
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--p4); font-weight: 600; margin-bottom: 12px;
+  }
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px,6vw,64px);
+    color: var(--p6); line-height: 1.1; font-weight: 600;
+  }
+  h1 em { font-style: italic; color: var(--p2); }
+  .header-sub {
+    font-size: 14px; color: var(--p4); margin-top: 12px;
+    font-weight: 400; letter-spacing: 0.3px;
+  }
+  .header-stripe {
+    display: flex; height: 6px;
+  }
+  .header-stripe div { flex: 1; }
+
+  .currency-bar { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; padding: 24px 24px 28px; }
+  .currency-btn {
+    padding: 7px 18px; border-radius: 30px; border: 1.5px solid var(--blush);
+    background: var(--white); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px;
+    font-weight: 500; color: var(--ink-soft); cursor: pointer; transition: all 0.2s;
+  }
+  .currency-btn:hover { border-color: var(--hot); color: var(--hot); }
+  .currency-btn.active {
+    background: linear-gradient(135deg, #EFA3C7, #FCBDD7);
+    border-color: #EFA3C7; color: white;
+    box-shadow: 0 4px 14px rgba(239,163,199,0.4);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px; max-width: 1200px; margin: 0 auto; padding: 0 24px 60px;
+  }
+  .card {
+    background: var(--white); border-radius: 22px; padding: 28px;
+    box-shadow: 0 4px 28px rgba(239,163,199,0.12); border: 1.5px solid rgba(251,218,229,0.8);
+    position: relative; overflow: hidden; animation: fadeUp 0.5s ease both;
+  }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 4px; border-radius: 22px 22px 0 0;
+  }
+  .card::after {
+    content: '✿'; position: absolute; top: 12px; right: 18px;
+    font-size: 18px; color: #FCBDD7; opacity: 0.5; pointer-events: none;
+  }
+  .card.pink::before { background: linear-gradient(90deg, #FBDAE5, #EFA3C7, #FCBDD7); }
+  .card.sage::before { background: linear-gradient(90deg, var(--sage-light), var(--sage)); }
+  .card.candy::before { background: linear-gradient(90deg, #FBDAE5, #EFA3C7, #FCBDD7); }
+  .card.ink::before { background: linear-gradient(90deg, #E0E0E0, #96989A); }
+  .card.full { grid-column: 1 / -1; }
+
+  .card-icon { font-size: 22px; margin-bottom: 6px; }
+  .card-label { font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: #EFA3C7; font-weight: 600; margin-bottom: 8px; }
+  .card.sage .card-label { color: var(--sage); }
+  .card.candy .card-label { color: #EFA3C7; }
+  .card.ink .card-label { color: #96989A; }
+  h2 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--p6); margin-bottom: 20px; letter-spacing: -0.3px; }
+
+  label { display: block; font-size: 12px; font-weight: 500; color: var(--ink-soft); margin-bottom: 5px; letter-spacing: 0.5px; }
+  input[type="number"], input[type="text"], select {
+    width: 100%; padding: 10px 14px; border: 1.5px solid var(--blush);
+    border-radius: 10px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px;
+    color: var(--ink); background: var(--cream); outline: none;
+    transition: border 0.2s, box-shadow 0.2s; margin-bottom: 14px;
+  }
+  input:focus, select:focus { border-color: #EFA3C7; background: white; box-shadow: 0 0 0 3px rgba(239,163,199,0.15); }
+
+  .result-box { background: linear-gradient(135deg, var(--cream), var(--gold-light)); border-radius: 14px; padding: 16px 20px; margin-top: 6px; border: 1px solid var(--blush); }
+  .result-box .result-label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: #EFA3C7; margin-bottom: 4px; font-weight: 600; }
+  .result-box .result-value { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--ink); font-weight: 700; }
+  .result-box.green { background: linear-gradient(135deg, #f0faf1, var(--sage-light)); border-color: var(--sage-light); }
+  .result-box.green .result-label { color: var(--sage); }
+  .result-box.hot { background: linear-gradient(135deg, #fff0f5, var(--bubblegum)); border-color: var(--blush); }
+  .result-box.hot .result-label { color: #c4698f; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+
+  .progress-wrap { margin-top: 16px; }
+  .progress-label-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-soft); margin-bottom: 6px; }
+  .progress-track { height: 10px; background: var(--bubblegum); border-radius: 10px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, #FCBDD7, #EFA3C7); transition: width 0.6s cubic-bezier(0.4,0,0.2,1); }
+  .progress-fill.green { background: linear-gradient(90deg, var(--sage-light), var(--sage)); }
+  .progress-pct { text-align: right; font-size: 13px; font-weight: 600; color: #EFA3C7; margin-top: 4px; }
+
+  /* CHECKLIST */
+  .checklist { list-style: none; }
+  .checklist li {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0; border-bottom: 1px dashed rgba(255,194,212,0.8);
+    font-size: 14px; color: var(--ink-soft); cursor: pointer;
+    transition: color 0.2s; user-select: none;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li.done { color: var(--sage); text-decoration: line-through; }
+  .check-box {
+    width: 20px; height: 20px; border: 2px solid var(--blush); border-radius: 6px;
+    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; font-size: 12px; pointer-events: none;
+  }
+  .checklist li.done .check-box { background: linear-gradient(135deg, #FCBDD7, #EFA3C7); border-color: #EFA3C7; color: white; }
+  .task-text { flex: 1; }
+  .check-delete { color: var(--blush); font-size: 13px; cursor: pointer; padding: 0 4px; flex-shrink: 0; line-height: 1; }
+  .check-delete:hover { color: var(--hot); }
+
+  .section-divider { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #EFA3C7; font-weight: 600; margin: 18px 0 12px; display: flex; align-items: center; gap: 8px; }
+  .section-divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--blush), transparent); }
+  .card.sage .section-divider { color: var(--sage); }
+  .card.sage .section-divider::after { background: linear-gradient(90deg, var(--sage-light), transparent); }
+
+  .add-row { display: flex; gap: 8px; }
+  .add-row input { flex: 1; margin: 0; }
+  .btn-add {
+    padding: 10px 16px; border-radius: 10px; border: none;
+    background: linear-gradient(135deg, #EFA3C7, #FCBDD7);
+    color: white; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px;
+    font-weight: 500; cursor: pointer; transition: opacity 0.2s, transform 0.15s; white-space: nowrap;
+  }
+  .btn-add:hover { opacity: 0.9; transform: scale(1.02); }
+  .btn-add.sage-btn { background: linear-gradient(135deg, var(--sage), #5a8a5e); }
+
+  /* CALENDAR */
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-top: 4px; }
+  .cal-day-name { text-align: center; font-size: 10px; font-weight: 600; color: #EFA3C7; letter-spacing: 1px; padding: 4px 0; }
+  .cal-day {
+    aspect-ratio: 1; border-radius: 8px; border: 1.5px solid var(--blush);
+    background: var(--cream); display: flex; flex-direction: column;
+    align-items: center; justify-content: center; font-size: 11px;
+    cursor: pointer; transition: all 0.15s; position: relative;
+  }
+  .cal-day:hover { border-color: var(--hot); background: #ffe0ec; }
+  .cal-day.has-post { background: linear-gradient(135deg, #FBDAE5, #FCBDD7); border-color: #EFA3C7; }
+  .cal-day.has-post::after { content: '✦'; font-size: 8px; color: #c4698f; position: absolute; bottom: 2px; }
+  .cal-day .day-num { font-weight: 500; color: var(--ink); }
+
+  /* INVENTORY */
+  .inventory-row { display: grid; grid-template-columns: 1fr 60px auto auto; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px dashed rgba(255,194,212,0.6); font-size: 13px; }
+  .inventory-row:last-child { border-bottom: none; }
+  .stock-badge { padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 500; }
+  .stock-ok { background: var(--sage-light); color: #2d6b30; }
+  .stock-low { background: #fde8c8; color: #a05a10; }
+  .stock-out { background: #fdd8d8; color: #a01010; }
+  .row-del { color: var(--blush); cursor: pointer; font-size: 14px; }
+  .row-del:hover { color: var(--hot); }
+
+  /* BEST SELLERS */
+  /* INVENTORY TABLE */
+  .inv-table { width: 100%; border-collapse: collapse; margin-top: 4px; table-layout: fixed; }
+  .inv-table thead tr { background: linear-gradient(135deg, #f0faf1, var(--sage-light)); }
+  .inv-table th { padding: 10px 14px; font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--sage); border-bottom: 2px solid var(--sage-light); text-align: left; }
+  .inv-table .inv-tr:hover { background: #f5fbf5; }
+  .inv-table .inv-tr:nth-child(even) { background: rgba(138,171,142,0.06); }
+  .inv-table .inv-tr:nth-child(even):hover { background: #f5fbf5; }
+  .inv-table td { padding: 8px 14px; border-bottom: 1px solid rgba(138,171,142,0.2); vertical-align: middle; }
+  .inv-table tbody tr:last-child td { border-bottom: none; }
+  .inv-name { width: 100%; margin: 0 !important; padding: 7px 10px !important; font-size: 14px !important; background: transparent; border: 1.5px solid transparent !important; border-radius: 8px; }
+  .inv-name:hover { border-color: var(--sage-light) !important; background: var(--white) !important; }
+  .inv-name:focus { border-color: var(--sage) !important; background: var(--white) !important; box-shadow: 0 0 0 3px rgba(138,171,142,0.15) !important; }
+  .inv-qty { width: 100%; margin: 0 !important; padding: 7px 10px !important; font-size: 14px !important; text-align: center; background: transparent; border: 1.5px solid transparent !important; border-radius: 8px; }
+  .inv-qty:hover { border-color: var(--sage-light) !important; background: var(--white) !important; }
+  .inv-qty:focus { border-color: var(--sage) !important; background: var(--white) !important; }
+  .bs-table { width: 100%; border-collapse: collapse; margin-top: 4px; table-layout: fixed; }
+  .bs-table thead tr { background: linear-gradient(135deg, var(--cream), var(--gold-light)); }
+  .bs-table th {
+    padding: 10px 14px; font-size: 11px; font-weight: 500;
+    letter-spacing: 1.5px; text-transform: uppercase; color: var(--hot);
+    border-bottom: 2px solid var(--blush); text-align: left;
+  }
+  .bs-table .bs-tr { transition: background 0.15s; }
+  .bs-table .bs-tr:hover { background: #fff5f8; }
+  .bs-table .bs-tr:nth-child(even) { background: rgba(255,194,212,0.08); }
+  .bs-table .bs-tr:nth-child(even):hover { background: #fff5f8; }
+  .bs-table td {
+    padding: 8px 14px; border-bottom: 1px solid rgba(255,194,212,0.35);
+    vertical-align: middle;
+  }
+  .bs-table tbody tr:last-child td { border-bottom: none; }
+  .bs-table td input {
+    margin: 0 !important; padding: 7px 10px !important;
+    font-size: 14px !important; background: transparent;
+    border: 1.5px solid transparent; border-radius: 8px; width: 100%;
+  }
+  .bs-table td input:hover { border-color: var(--blush); background: var(--white); }
+  .bs-table td input:focus { border-color: var(--hot); background: var(--white); box-shadow: 0 0 0 3px rgba(255,77,126,0.08); }
+  .bs-table td .bs-num { text-align: center; }
+  .bs-table td .bs-price { text-align: right; }
+  .bs-revenue-label {
+    font-family: 'Cormorant Garamond', serif; font-size: 15px;
+    font-weight: 700; color: var(--hot); text-align: right;
+    display: block; padding-right: 2px; white-space: nowrap;
+  }
+  .bs-rank { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-weight: 700; color: #EFA3C7; text-align: center; }
+  .bs-rank.g { color: #c9a84c; }
+  .bs-rank.s { color: #9e9e9e; }
+  .bs-rank.b { color: #b87333; }
+  .bs-name-input { width: 100%; }
+  .bs-cat-input { width: 100%; }
+  .bs-num { text-align: center; }
+  .bs-price { text-align: right; }
+  .quick-q {
+    padding: 7px 14px; border-radius: 20px;
+    border: 1.5px solid var(--blush); background: var(--white);
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px;
+    color: var(--deep); cursor: pointer; transition: all 0.2s;
+  }
+  .quick-q:hover { border-color: #EFA3C7; background: #FBDAE5; color: #c4698f; }
+  .bs-num { text-align: center; width: 60px; }
+  .bs-price { width: 75px; }
+
+  /* TABS */
+  .tabs { display: flex; gap: 4px; margin-bottom: 20px; border-bottom: 2px solid var(--blush); }
+  .tab { padding: 8px 16px; font-size: 13px; font-weight: 500; color: var(--ink-soft); cursor: pointer; border-radius: 8px 8px 0 0; transition: all 0.2s; margin-bottom: -2px; border: 2px solid transparent; }
+  .tab:hover { color: var(--hot); }
+  .tab.active { color: #c4698f; border-color: #FBDAE5; border-bottom-color: var(--white); background: var(--white); }
+
+  .summary-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px dashed rgba(255,194,212,0.6); font-size: 14px; }
+  .summary-row:last-of-type { border-bottom: none; }
+  .summary-row .val { font-family: 'Cormorant Garamond', serif; font-size: 17px; }
+  .summary-row.total { font-weight: 600; font-size: 16px; }
+  .summary-row.total .val { color: #EFA3C7; }
+  .summary-row.expense .val { color: #c04040; }
+
+  .month-row { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .month-arrow { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--blush); background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--hot); transition: all 0.15s; }
+  .month-arrow:hover { background: var(--blush); }
+  .month-name { font-family: 'Cormorant Garamond', serif; font-size: 18px; flex: 1; }
+
+  /* EXPORT */
+  .export-bar { display: flex; gap: 8px; margin-top: 18px; flex-wrap: wrap; }
+  .btn-export {
+    display: flex; align-items: center; gap: 6px; padding: 9px 18px;
+    border-radius: 30px; border: 1.5px solid var(--blush); background: var(--white);
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 500;
+    color: var(--deep); cursor: pointer; transition: all 0.2s;
+  }
+  .btn-export:hover { border-color: var(--hot); color: var(--hot); transform: translateY(-1px); box-shadow: 0 4px 12px var(--shadow); }
+
+  .btn-outline-add {
+    margin-top: 14px; padding: 9px 18px; border-radius: 20px;
+    border: 1.5px dashed; background: none;
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; cursor: pointer;
+    width: 100%; transition: all 0.2s;
+  }
+  .btn-outline-add.pink { border-color: #EFA3C7; color: #EFA3C7; }
+  .btn-outline-add.pink:hover { background: #FBDAE5; }
+  .btn-outline-add.green { border-color: var(--sage); color: var(--sage); }
+  .btn-outline-add.green:hover { background: var(--sage-light); }
+
+  .tip { font-size: 12px; color: var(--ink-soft); font-style: italic; margin-top: 10px; padding: 10px 14px; background: linear-gradient(135deg, var(--cream), var(--gold-light)); border-radius: 10px; border-left: 3px solid var(--candy); }
+
+  /* MINI CALCULADORA */
+  .cbtn {
+    border: none; border-radius: 12px; padding: 12px 4px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px; font-weight: 600;
+    cursor: pointer; transition: all 0.1s;
+    box-shadow: 0 3px 0 rgba(0,0,0,0.2);
+    active: transform scale(0.95);
+  }
+  .cbtn:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0,0,0,0.2); }
+  .cbtn-num { background: rgba(255,255,255,0.18); color: #fff; }
+  .cbtn-num:hover { background: rgba(255,255,255,0.28); }
+  .cbtn-fn  { background: rgba(255,255,255,0.32); color: #fff; }
+  .cbtn-fn:hover  { background: rgba(255,255,255,0.42); }
+  .cbtn-op  { background: rgba(255,255,255,0.9); color: #d45f8a; }
+  .cbtn-op:hover  { background: #fff; }
+  .cbtn-eq  { background: #fff; color: #d45f8a; box-shadow: 0 3px 0 rgba(0,0,0,0.15); }
+  .cbtn-eq:hover  { background: #ffeef5; }
+  .sticky {
+    border-radius: 16px;
+    padding: 14px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    animation: popIn 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .sticky:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+  @keyframes popIn { from{opacity:0;transform:scale(0.85)} to{opacity:1;transform:scale(1)} }
+  .sticky-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px; font-weight: 700;
+    border: none; background: transparent;
+    outline: none; width: 100%;
+    letter-spacing: 0.3px;
+    padding: 0;
+  }
+  .sticky-body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px; line-height: 1.6;
+    border: none; background: transparent;
+    outline: none; width: 100%; resize: none;
+    min-height: 80px; padding: 0;
+    flex: 1;
+  }
+  .sticky-del {
+    position: absolute; top: 10px; right: 10px;
+    background: rgba(0,0,0,0.08); border: none;
+    border-radius: 50%; width: 22px; height: 22px;
+    font-size: 11px; cursor: pointer; opacity: 0;
+    transition: opacity 0.2s; display: flex;
+    align-items: center; justify-content: center;
+    color: rgba(0,0,0,0.4);
+  }
+  .sticky:hover .sticky-del { opacity: 1; }
+  .sticky-del:hover { background: rgba(0,0,0,0.15); }
+  .card:nth-child(1){animation-delay:.05s} .card:nth-child(2){animation-delay:.10s}
+  .card:nth-child(3){animation-delay:.15s} .card:nth-child(4){animation-delay:.20s}
+  .card:nth-child(5){animation-delay:.25s} .card:nth-child(6){animation-delay:.30s}
+  .card:nth-child(7){animation-delay:.35s}
+
+  footer { text-align: center; padding: 16px; font-size: 12px; color: #EFA3C7; opacity: 0.9; letter-spacing: 1px; }
+
+  .toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: linear-gradient(135deg, #EFA3C7, #FCBDD7);
+    color: white; padding: 12px 22px; border-radius: 30px; font-size: 13px; font-weight: 500;
+    box-shadow: 0 8px 24px rgba(255,77,126,0.3);
+    transform: translateY(80px); opacity: 0; transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    z-index: 999; pointer-events: none;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* AUTOSAVE BADGE */
+  .autosave-badge {
+    position: fixed; top: 16px; right: 16px;
+    background: var(--white); border: 1.5px solid #FBDAE5;
+    border-radius: 30px; padding: 6px 14px;
+    font-size: 11px; font-weight: 500; color: var(--ink-soft);
+    display: flex; align-items: center; gap: 6px;
+    box-shadow: 0 2px 12px var(--shadow); z-index: 100;
+    transition: all 0.3s;
+  }
+  .autosave-badge .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--sage); animation: pulse 2s infinite;
+  }
+  .autosave-badge.saving .dot { background: var(--candy); animation: none; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  /* EXPORT ALL MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(45,26,34,0.45);
+    backdrop-filter: blur(4px); z-index: 200;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--white); border-radius: 24px; padding: 36px;
+    max-width: 440px; width: 90%; box-shadow: 0 20px 60px rgba(194,24,91,0.2);
+    border: 1.5px solid var(--blush); transform: translateY(20px);
+    transition: transform 0.3s; position: relative;
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal h3 { font-family: 'Cormorant Garamond', serif; font-size: 22px; margin-bottom: 6px; }
+  .modal p { font-size: 13px; color: var(--ink-soft); margin-bottom: 22px; }
+  .modal-close { position: absolute; top: 16px; right: 20px; background: none; border: none; font-size: 20px; cursor: pointer; color: var(--blush); }
+  .modal-close:hover { color: var(--hot); }
+  .check-option {
+    display: flex; align-items: center; gap: 12px;
+    padding: 13px 16px; border-radius: 12px; margin-bottom: 8px;
+    border: 1.5px solid var(--blush); cursor: pointer;
+    transition: all 0.15s; user-select: none;
+  }
+  .check-option:hover { border-color: var(--hot); background: var(--cream); }
+  .check-option.selected { border-color: #EFA3C7; background: linear-gradient(135deg, #fdf6f9, #FBDAE5); }
+  .check-option input[type=checkbox] { display: none; }
+  .custom-cb {
+    width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--blush);
+    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 12px; transition: all 0.2s;
+  }
+  .check-option.selected .custom-cb { background: linear-gradient(135deg, #EFA3C7, #FCBDD7); border-color: #EFA3C7; color: white; }
+  .option-icon { font-size: 18px; }
+  .option-label { font-size: 14px; font-weight: 500; color: var(--ink); }
+  .option-sub { font-size: 11px; color: var(--ink-soft); }
+  .modal-actions { display: flex; gap: 10px; margin-top: 22px; }
+  .btn-modal-csv { flex: 1; padding: 12px; border-radius: 12px; border: 1.5px solid var(--blush); background: var(--white); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 500; color: var(--deep); cursor: pointer; transition: all 0.2s; }
+  .btn-modal-csv:hover { border-color: var(--hot); color: var(--hot); }
+  .btn-modal-doc { flex: 1; padding: 12px; border-radius: 12px; border: none; background: linear-gradient(135deg, #EFA3C7, #FCBDD7); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 500; color: white; cursor: pointer; transition: opacity 0.2s; }
+  .btn-modal-doc:hover { opacity: 0.9; }
+
+  /* EXPORT ALL FLOATING BTN */
+  .fab-export {
+    position: fixed; bottom: 28px; left: 28px;
+    background: linear-gradient(135deg, #EFA3C7, #c4698f);
+    color: white; border: none; border-radius: 30px;
+    padding: 14px 22px; font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    box-shadow: 0 6px 24px rgba(239,163,199,0.45);
+    display: flex; align-items: center; gap: 8px;
+    transition: all 0.2s; z-index: 100;
+  }
+  .fab-export:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(194,24,91,0.4); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-hero">
+    <div class="header-deco">
+      <span>🌸</span><span>📓</span><span>🧮</span><span>✏️</span><span>🌸</span>
+    </div>
+    <div class="header-tag">✦ Business Planner ✦</div>
+    <h1>Mi Negocio de<br><em>Papelería Creativa</em></h1>
+    <p class="header-sub">Organiza, planifica y haz crecer tu negocio — todo en un lugar 🎀</p>
+  </div>
+  <div class="header-stripe">
+    <div style="background:#FCBDD7"></div>
+    <div style="background:#EFA3C7"></div>
+    <div style="background:#FBDAE5"></div>
+    <div style="background:#E0E0E0"></div>
+    <div style="background:#FCBDD7"></div>
+  </div>
+</header>
+
+<div class="currency-bar">
+  <button class="currency-btn active" onclick="setCurrency('MXN','$','MXN',this)">🇲🇽 Peso MX</button>
+  <button class="currency-btn" onclick="setCurrency('USD','$','USD',this)">🇺🇸 Dólar</button>
+  <button class="currency-btn" onclick="setCurrency('EUR','€','EUR',this)">🇪🇺 Euro</button>
+  <button class="currency-btn" onclick="setCurrency('COP','$','COP',this)">🇨🇴 Peso CO</button>
+  <button class="currency-btn" onclick="setCurrency('ARS','$','ARS',this)">🇦🇷 Peso AR</button>
+  <button class="currency-btn" onclick="setCurrency('CLP','$','CLP',this)">🇨🇱 Peso CL</button>
+  <button class="currency-btn" onclick="setCurrency('PEN','S/','PEN',this)">🇵🇪 Sol</button>
+</div>
+
+<div class="grid">
+
+  <!-- CARD 1: META DE VENTAS -->
+  <div class="card pink">
+    <div class="card-icon">🎯</div>
+    <div class="card-label">Metas del Mes</div>
+    <h2>Ventas & Progreso</h2>
+    <div class="month-row">
+      <button class="month-arrow" onclick="prevMonth()">‹</button>
+      <span class="month-name" id="monthName">Febrero 2026</span>
+      <button class="month-arrow" onclick="nextMonth()">›</button>
+    </div>
+    <label>Meta de ventas del mes</label>
+    <input type="number" id="metaVentas" value="10000" oninput="calcMeta()">
+    <label>Ventas realizadas hasta hoy</label>
+    <input type="number" id="ventasActuales" value="6800" oninput="calcMeta()">
+    <div class="progress-wrap">
+      <div class="progress-label-row"><span>Progreso</span><span id="metaFaltante">—</span></div>
+      <div class="progress-track"><div class="progress-fill" id="metaBar" style="width:0%"></div></div>
+      <div class="progress-pct" id="metaPct">0%</div>
+    </div>
+    <div class="result-box hot" style="margin-top:16px">
+      <div class="result-label">Total ventas este mes</div>
+      <div class="result-value" id="totalVentas">—</div>
+    </div>
+  </div>
+
+  <!-- CARD 2: CALCULADORA DE PRECIO -->
+  <div class="card sage">
+    <div class="card-icon">🧮</div>
+    <div class="card-label">Precio Justo</div>
+    <h2>Calculadora de Precio</h2>
+    <label>Costo de materiales</label>
+    <input type="number" id="costoMat" value="45" oninput="calcPrecio()">
+    <label>Tiempo de elaboración (minutos)</label>
+    <input type="number" id="tiempoMin" value="30" oninput="calcPrecio()">
+    <label>Tu tarifa por hora</label>
+    <input type="number" id="tarifaHora" value="120" oninput="calcPrecio()">
+    <label>Gastos generales (empaque, envío…)</label>
+    <input type="number" id="gastosExtra" value="15" oninput="calcPrecio()">
+    <label>Margen de ganancia deseado (%)</label>
+    <input type="number" id="margen" value="60" oninput="calcPrecio()">
+    <div class="two-col">
+      <div class="result-box green"><div class="result-label">Precio mínimo</div><div class="result-value" id="precioMin">—</div></div>
+      <div class="result-box hot"><div class="result-label">Precio ideal</div><div class="result-value" id="precioIdeal">—</div></div>
+    </div>
+    <div class="tip" id="priceTip">Ingresa tus costos ✨</div>
+  </div>
+
+  <!-- CARD 3: INGRESOS Y GASTOS -->
+  <div class="card candy">
+    <div class="card-icon">💰</div>
+    <div class="card-label">Finanzas</div>
+    <h2>Ingresos & Gastos</h2>
+    <div class="tabs">
+      <div class="tab active" onclick="showTab('ingresos',this)">Ingresos</div>
+      <div class="tab" onclick="showTab('gastos',this)">Gastos</div>
+      <div class="tab" onclick="showTab('resumen',this)">Resumen</div>
+    </div>
+    <div id="tab-ingresos">
+      <label>Ventas en línea (Etsy, Tiendanube…)</label>
+      <input type="number" id="ingOnline" value="4500" oninput="calcFinanzas()">
+      <label>Ventas en ferias / presencial</label>
+      <input type="number" id="ingFeria" value="1800" oninput="calcFinanzas()">
+      <label>Pedidos personalizados</label>
+      <input type="number" id="ingCustom" value="2100" oninput="calcFinanzas()">
+      <label>Otros ingresos</label>
+      <input type="number" id="ingOtros" value="400" oninput="calcFinanzas()">
+    </div>
+    <div id="tab-gastos" style="display:none">
+      <label>Materiales e insumos</label>
+      <input type="number" id="gastoMat" value="1200" oninput="calcFinanzas()">
+      <label>Empaque & envíos</label>
+      <input type="number" id="gastoEnvio" value="350" oninput="calcFinanzas()">
+      <label>Plataformas & suscripciones</label>
+      <input type="number" id="gastoPlat" value="280" oninput="calcFinanzas()">
+      <label>Publicidad & marketing</label>
+      <input type="number" id="gastoPub" value="500" oninput="calcFinanzas()">
+    </div>
+    <div id="tab-resumen" style="display:none">
+      <div class="summary-row"><span>Total ingresos</span><span class="val" id="sumIngresos">—</span></div>
+      <div class="summary-row expense"><span>Total gastos</span><span class="val" id="sumGastos">—</span></div>
+      <div class="summary-row total"><span>✦ Ganancia neta</span><span class="val" id="sumNeta">—</span></div>
+      <div class="progress-wrap">
+        <div class="progress-label-row"><span>Margen real</span><span id="margenReal">—</span></div>
+        <div class="progress-track"><div class="progress-fill green" id="margenBar" style="width:0%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 4: CHECKLIST -->
+  <div class="card ink">
+    <div class="card-icon">✅</div>
+    <div class="card-label">Tareas</div>
+    <h2>Checklist Semanal</h2>
+    <ul class="checklist" id="checklist">
+      <li onclick="toggleCheck(this)"><span class="check-box"></span><span class="task-text">Fotografiar nuevos productos</span><span class="check-delete" onclick="deleteTask(event,this)">✕</span></li>
+      <li onclick="toggleCheck(this)"><span class="check-box"></span><span class="task-text">Subir listings a tienda online</span><span class="check-delete" onclick="deleteTask(event,this)">✕</span></li>
+      <li onclick="toggleCheck(this)"><span class="check-box"></span><span class="task-text">Responder mensajes de clientes</span><span class="check-delete" onclick="deleteTask(event,this)">✕</span></li>
+      <li onclick="toggleCheck(this)"><span class="check-box"></span><span class="task-text">Preparar pedidos pendientes</span><span class="check-delete" onclick="deleteTask(event,this)">✕</span></li>
+      <li onclick="toggleCheck(this)"><span class="check-box"></span><span class="task-text">Publicar en Instagram/TikTok</span><span class="check-delete" onclick="deleteTask(event,this)">✕</span></li>
+      <li onclick="toggleCheck(this)"><span class="check-box"></span><span class="task-text">Revisar inventario de insumos</span><span class="check-delete" onclick="deleteTask(event,this)">✕</span></li>
+      <li onclick="toggleCheck(this)"><span class="check-box"></span><span class="task-text">Registrar ventas del día</span><span class="check-delete" onclick="deleteTask(event,this)">✕</span></li>
+      <li onclick="toggleCheck(this)"><span class="check-box"></span><span class="task-text">Actualizar precios según costos</span><span class="check-delete" onclick="deleteTask(event,this)">✕</span></li>
+    </ul>
+    <div style="margin-top:14px">
+      <div class="progress-label-row"><span style="font-size:12px;color:var(--ink-soft)">Completadas</span><span id="checkCount" style="font-size:12px;color:var(--ink-soft)">0/8</span></div>
+      <div class="progress-track"><div class="progress-fill" id="checkBar" style="width:0%"></div></div>
+    </div>
+    <div class="section-divider" style="margin-top:20px">Agregar tarea</div>
+    <div class="add-row">
+      <input type="text" id="newTaskInput" placeholder="Ej: Empacar pedidos del viernes…" style="margin:0" onkeydown="if(event.key==='Enter')addTask()">
+      <button class="btn-add" onclick="addTask()">+ Agregar</button>
+    </div>
+  </div>
+
+  <!-- CARD 5: CALENDARIO -->
+  <div class="card pink full">
+    <div class="card-icon">📅</div>
+    <div class="card-label">Contenido</div>
+    <h2>Calendario de Contenido — <span id="calMonthLabel">Febrero 2026</span></h2>
+    <div class="three-col" style="margin-bottom:16px">
+      <div class="result-box hot"><div class="result-label">Posts planeados</div><div class="result-value" id="postsCount">0</div></div>
+      <div class="result-box green"><div class="result-label">Días activos</div><div class="result-value" id="daysWithContent">0</div></div>
+      <div class="result-box"><div class="result-label">Frec. semanal</div><div class="result-value" id="weekFreq">0</div></div>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+    <div class="tip" style="margin-top:14px">💡 Haz clic en los días para marcar cuándo publicarás. La consistencia es la clave del crecimiento.</div>
+  </div>
+
+  <!-- CARD 6: INVENTARIO -->
+  <div class="card sage">
+    <div class="card-icon">📦</div>
+    <div class="card-label">Inventario</div>
+    <h2>Control de Productos</h2>
+
+    <table class="inv-table">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th style="width:90px;text-align:center">Stock</th>
+          <th style="width:90px;text-align:center">Estado</th>
+          <th style="width:28px"></th>
+        </tr>
+      </thead>
+      <tbody id="inventoryList">
+        <tr class="inv-tr">
+          <td><input type="text" class="inv-name" value="Stickers florales A5" placeholder="Nombre del producto" oninput="triggerSave()"></td>
+          <td><input type="number" class="inv-qty" value="24" oninput="updateStock(this);triggerSave()"></td>
+          <td><span class="stock-badge stock-ok">OK</span></td>
+          <td><span class="row-del" onclick="this.closest('tr').remove();triggerSave()">✕</span></td>
+        </tr>
+        <tr class="inv-tr">
+          <td><input type="text" class="inv-name" value="Washi tape botanical" placeholder="Nombre del producto" oninput="triggerSave()"></td>
+          <td><input type="number" class="inv-qty" value="5" oninput="updateStock(this);triggerSave()"></td>
+          <td><span class="stock-badge stock-low">Poco</span></td>
+          <td><span class="row-del" onclick="this.closest('tr').remove();triggerSave()">✕</span></td>
+        </tr>
+        <tr class="inv-tr">
+          <td><input type="text" class="inv-name" value="Agenda 2026 pasta dura" placeholder="Nombre del producto" oninput="triggerSave()"></td>
+          <td><input type="number" class="inv-qty" value="0" oninput="updateStock(this);triggerSave()"></td>
+          <td><span class="stock-badge stock-out">Agotado</span></td>
+          <td><span class="row-del" onclick="this.closest('tr').remove();triggerSave()">✕</span></td>
+        </tr>
+        <tr class="inv-tr">
+          <td><input type="text" class="inv-name" value="Set papelería vintage" placeholder="Nombre del producto" oninput="triggerSave()"></td>
+          <td><input type="number" class="inv-qty" value="12" oninput="updateStock(this);triggerSave()"></td>
+          <td><span class="stock-badge stock-ok">OK</span></td>
+          <td><span class="row-del" onclick="this.closest('tr').remove();triggerSave()">✕</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button class="btn-outline-add green" onclick="addInventoryRow()">+ Agregar producto</button>
+  </div>
+
+  <!-- CARD 7: CALCULADORA FÍSICA -->
+  <div class="card" style="background:linear-gradient(160deg,#f9d0e3 0%,#fce4ef 40%,#fff0f6 100%);border-color:#f0a8c8;padding:22px;display:flex;flex-direction:column;align-items:center">
+    <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#EFA3C7,#FCBDD7)"></div>
+    <div style="position:absolute;top:12px;right:18px;font-size:18px;color:#FCBDD7;opacity:0.5">✿</div>
+
+    <!-- Calculadora física -->
+    <div style="background:linear-gradient(160deg,#e8789e 0%,#d45f8a 100%);border-radius:28px;padding:18px 16px 20px;width:100%;max-width:240px;box-shadow:0 8px 32px rgba(212,95,138,0.35),inset 0 1px 0 rgba(255,255,255,0.25),0 2px 0 #b04070;margin-top:4px">
+
+      <!-- Marca -->
+      <div style="text-align:right;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,0.55);font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;text-transform:uppercase;margin-bottom:8px">PINKIE ✦</div>
+
+      <!-- Pantalla -->
+      <div style="background:#1a0a10;border-radius:14px;padding:12px 14px 10px;margin-bottom:14px;box-shadow:inset 0 3px 10px rgba(0,0,0,0.5),0 1px 0 rgba(255,255,255,0.1)">
+        <!-- Expresión -->
+        <div id="calcExpr" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;color:rgba(255,182,210,0.6);text-align:right;min-height:16px;letter-spacing:0.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">&nbsp;</div>
+        <!-- Resultado -->
+        <div id="calcDisplay" style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:#fff;text-align:right;line-height:1.1;letter-spacing:-1px;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">0</div>
+      </div>
+
+      <!-- Botones -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:7px">
+
+        <!-- Fila 1: funciones -->
+        <button onclick="calcFn('clear')"    class="cbtn cbtn-fn">AC</button>
+        <button onclick="calcFn('sign')"     class="cbtn cbtn-fn">+/−</button>
+        <button onclick="calcFn('percent')"  class="cbtn cbtn-fn">%</button>
+        <button onclick="calcFn('op','/')"   class="cbtn cbtn-op">÷</button>
+
+        <!-- Fila 2 -->
+        <button onclick="calcFn('num','7')"  class="cbtn cbtn-num">7</button>
+        <button onclick="calcFn('num','8')"  class="cbtn cbtn-num">8</button>
+        <button onclick="calcFn('num','9')"  class="cbtn cbtn-num">9</button>
+        <button onclick="calcFn('op','*')"   class="cbtn cbtn-op">×</button>
+
+        <!-- Fila 3 -->
+        <button onclick="calcFn('num','4')"  class="cbtn cbtn-num">4</button>
+        <button onclick="calcFn('num','5')"  class="cbtn cbtn-num">5</button>
+        <button onclick="calcFn('num','6')"  class="cbtn cbtn-num">6</button>
+        <button onclick="calcFn('op','-')"   class="cbtn cbtn-op">−</button>
+
+        <!-- Fila 4 -->
+        <button onclick="calcFn('num','1')"  class="cbtn cbtn-num">1</button>
+        <button onclick="calcFn('num','2')"  class="cbtn cbtn-num">2</button>
+        <button onclick="calcFn('num','3')"  class="cbtn cbtn-num">3</button>
+        <button onclick="calcFn('op','+')"   class="cbtn cbtn-op">+</button>
+
+        <!-- Fila 5 -->
+        <button onclick="calcFn('num','0')"  class="cbtn cbtn-num" style="grid-column:span 2;border-radius:20px;text-align:left;padding-left:18px">0</button>
+        <button onclick="calcFn('dot')"      class="cbtn cbtn-num">.</button>
+        <button onclick="calcFn('equal')"    class="cbtn cbtn-eq">=</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 8: LO MÁS VENDIDO -->
+  <div class="card candy full">
+    <div class="card-icon">⭐</div>
+    <div class="card-label">Top Ventas</div>
+    <h2>Lo Más Vendido del Mes</h2>
+
+    <table class="bs-table" id="bestsellerList">
+      <thead>
+        <tr>
+          <th style="width:44px">#</th>
+          <th style="min-width:300px">Nombre del producto</th>
+          <th style="width:90px;text-align:center">Unidades</th>
+          <th style="width:100px;text-align:right">Precio unit.</th>
+          <th style="width:120px;text-align:right">Total</th>
+          <th style="width:28px"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="bs-tr">
+          <td><span class="bs-rank g">1</span></td>
+          <td><input type="text" class="bs-name-input" value="Stickers florales A5" placeholder="Nombre del producto" oninput="calcBS();triggerSave()"></td>
+          <td><input type="number" class="bs-num" value="42" oninput="calcBS();triggerSave()"></td>
+          <td><input type="number" class="bs-price" value="85" placeholder="0.00" oninput="calcBS();triggerSave()"></td>
+          <td class="bs-revenue-label">—</td>
+          <td><span class="row-del" onclick="this.closest('tr').remove();calcBS();triggerSave()">✕</span></td>
+        </tr>
+        <tr class="bs-tr">
+          <td><span class="bs-rank s">2</span></td>
+          <td><input type="text" class="bs-name-input" value="Washi tape botanical" placeholder="Nombre del producto" oninput="calcBS();triggerSave()"></td>
+          <td><input type="number" class="bs-num" value="31" oninput="calcBS();triggerSave()"></td>
+          <td><input type="number" class="bs-price" value="120" placeholder="0.00" oninput="calcBS();triggerSave()"></td>
+          <td class="bs-revenue-label">—</td>
+          <td><span class="row-del" onclick="this.closest('tr').remove();calcBS();triggerSave()">✕</span></td>
+        </tr>
+        <tr class="bs-tr">
+          <td><span class="bs-rank b">3</span></td>
+          <td><input type="text" class="bs-name-input" value="Set papelería vintage" placeholder="Nombre del producto" oninput="calcBS();triggerSave()"></td>
+          <td><input type="number" class="bs-num" value="18" oninput="calcBS();triggerSave()"></td>
+          <td><input type="number" class="bs-price" value="350" placeholder="0.00" oninput="calcBS();triggerSave()"></td>
+          <td class="bs-revenue-label">—</td>
+          <td><span class="row-del" onclick="this.closest('tr').remove();calcBS();triggerSave()">✕</span></td>
+        </tr>
+        <tr class="bs-tr">
+          <td><span class="bs-rank">4</span></td>
+          <td><input type="text" class="bs-name-input" value="Agenda 2026 pasta dura" placeholder="Nombre del producto" oninput="calcBS();triggerSave()"></td>
+          <td><input type="number" class="bs-num" value="9" oninput="calcBS();triggerSave()"></td>
+          <td><input type="number" class="bs-price" value="520" placeholder="0.00" oninput="calcBS();triggerSave()"></td>
+          <td class="bs-revenue-label">—</td>
+          <td><span class="row-del" onclick="this.closest('tr').remove();calcBS();triggerSave()">✕</span></td>
+        </tr>
+        <tr class="bs-tr">
+          <td><span class="bs-rank">5</span></td>
+          <td><input type="text" class="bs-name-input" value="Clip floral metálico" placeholder="Nombre del producto" oninput="calcBS();triggerSave()"></td>
+          <td><input type="number" class="bs-num" value="6" oninput="calcBS();triggerSave()"></td>
+          <td><input type="number" class="bs-price" value="45" placeholder="0.00" oninput="calcBS();triggerSave()"></td>
+          <td class="bs-revenue-label">—</td>
+          <td><span class="row-del" onclick="this.closest('tr').remove();calcBS();triggerSave()">✕</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button class="btn-outline-add pink" onclick="addBSRow()">+ Agregar fila</button>
+    <div id="bsTotals" style="margin-top:16px"></div>
+  </div>
+
+  <!-- CARD 9: CLIENTES -->
+  <div class="card pink full">
+    <div class="card-icon">👥</div>
+    <div class="card-label">Clientes</div>
+    <h2>Registro de Clientes</h2>
+
+    <!-- Summary row -->
+    <div class="three-col" style="margin-bottom:20px">
+      <div class="result-box hot">
+        <div class="result-label">Total clientes</div>
+        <div class="result-value" id="clientCount">0</div>
+      </div>
+      <div class="result-box">
+        <div class="result-label">Ingresos totales</div>
+        <div class="result-value" id="clientTotal" style="font-size:20px">—</div>
+      </div>
+      <div class="result-box green">
+        <div class="result-label">🥇 Top cliente</div>
+        <div class="result-value" id="topClient" style="font-size:16px;padding-top:4px">—</div>
+      </div>
+    </div>
+
+    <table class="inv-table" style="table-layout:fixed">
+      <thead>
+        <tr>
+          <th style="width:180px">Cliente</th>
+          <th>Producto comprado</th>
+          <th style="width:110px;text-align:right">Monto</th>
+          <th style="width:120px;text-align:center">Fecha</th>
+          <th style="width:28px"></th>
+        </tr>
+      </thead>
+      <tbody id="clientList">
+        <tr class="inv-tr">
+          <td><input type="text" class="inv-name" value="María García" placeholder="Nombre del cliente" oninput="calcClients();triggerSave()"></td>
+          <td><input type="text" class="inv-name" value="Stickers florales A5 x3" placeholder="Producto comprado" oninput="triggerSave()"></td>
+          <td><input type="number" class="inv-qty" style="text-align:right" value="255" placeholder="0.00" oninput="calcClients();triggerSave()"></td>
+          <td><input type="text" class="inv-name" style="text-align:center" value="15/02/2026" placeholder="dd/mm/aaaa" oninput="triggerSave()"></td>
+          <td><span class="row-del" onclick="this.closest('tr').remove();calcClients();triggerSave()">✕</span></td>
+        </tr>
+        <tr class="inv-tr">
+          <td><input type="text" class="inv-name" value="Laura Soto" placeholder="Nombre del cliente" oninput="calcClients();triggerSave()"></td>
+          <td><input type="text" class="inv-name" value="Washi tape botanical x2" placeholder="Producto comprado" oninput="triggerSave()"></td>
+          <td><input type="number" class="inv-qty" style="text-align:right" value="240" placeholder="0.00" oninput="calcClients();triggerSave()"></td>
+          <td><input type="text" class="inv-name" style="text-align:center" value="18/02/2026" placeholder="dd/mm/aaaa" oninput="triggerSave()"></td>
+          <td><span class="row-del" onclick="this.closest('tr').remove();calcClients();triggerSave()">✕</span></td>
+        </tr>
+        <tr class="inv-tr">
+          <td><input type="text" class="inv-name" value="Ana Ruiz" placeholder="Nombre del cliente" oninput="calcClients();triggerSave()"></td>
+          <td><input type="text" class="inv-name" value="Agenda 2026 pasta dura" placeholder="Producto comprado" oninput="triggerSave()"></td>
+          <td><input type="number" class="inv-qty" style="text-align:right" value="520" placeholder="0.00" oninput="calcClients();triggerSave()"></td>
+          <td><input type="text" class="inv-name" style="text-align:center" value="20/02/2026" placeholder="dd/mm/aaaa" oninput="triggerSave()"></td>
+          <td><span class="row-del" onclick="this.closest('tr').remove();calcClients();triggerSave()">✕</span></td>
+        </tr>
+        <tr class="inv-tr">
+          <td><input type="text" class="inv-name" value="María García" placeholder="Nombre del cliente" oninput="calcClients();triggerSave()"></td>
+          <td><input type="text" class="inv-name" value="Set papelería vintage" placeholder="Producto comprado" oninput="triggerSave()"></td>
+          <td><input type="number" class="inv-qty" style="text-align:right" value="350" placeholder="0.00" oninput="calcClients();triggerSave()"></td>
+          <td><input type="text" class="inv-name" style="text-align:center" value="22/02/2026" placeholder="dd/mm/aaaa" oninput="triggerSave()"></td>
+          <td><span class="row-del" onclick="this.closest('tr').remove();calcClients();triggerSave()">✕</span></td>
+        </tr>
+        <tr class="inv-tr">
+          <td><input type="text" class="inv-name" value="Sofía Méndez" placeholder="Nombre del cliente" oninput="calcClients();triggerSave()"></td>
+          <td><input type="text" class="inv-name" value="Clip floral metálico x5" placeholder="Producto comprado" oninput="triggerSave()"></td>
+          <td><input type="number" class="inv-qty" style="text-align:right" value="225" placeholder="0.00" oninput="calcClients();triggerSave()"></td>
+          <td><input type="text" class="inv-name" style="text-align:center" value="25/02/2026" placeholder="dd/mm/aaaa" oninput="triggerSave()"></td>
+          <td><span class="row-del" onclick="this.closest('tr').remove();calcClients();triggerSave()">✕</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button class="btn-outline-add pink" onclick="addClientRow()">+ Agregar cliente</button>
+  </div>
+
+  <!-- CARD 10: CALCULADORA IA -->
+  <div class="card pink full">
+    <div class="card-icon">🤖</div>
+    <div class="card-label">Asistente IA</div>
+    <h2>Calculadora Inteligente</h2>
+    <p style="font-size:13px;color:var(--ink-soft);margin-bottom:20px">Pregúntame cualquier cálculo de tu negocio en lenguaje natural. Ejemplos: <em>"¿Cuánto es el 25% de 700?"</em> · <em>"Si vendo 30 stickers a 85 pesos, ¿cuánto gano con 60% de margen?"</em> · <em>"¿Cuánto debo cobrar si mi costo es 45 y quiero ganar 200?"</em></p>
+
+    <div style="display:flex;gap:10px;align-items:flex-end">
+      <div style="flex:1">
+        <label>Tu pregunta o cálculo</label>
+        <input type="text" id="aiQuestion" placeholder="Ej: ¿Cuánto es el 25% de 700?" onkeydown="if(event.key==='Enter')askAI()" style="margin:0;font-size:15px">
+      </div>
+      <button class="btn-add" onclick="askAI()" id="aiBtn" style="padding:11px 24px;border-radius:12px;white-space:nowrap;margin-bottom:0">
+        ✦ Calcular
+      </button>
+    </div>
+
+    <div id="aiResult" style="display:none;margin-top:18px">
+      <div class="result-box hot" style="position:relative">
+        <div class="result-label">Resultado</div>
+        <div id="aiAnswer" style="font-size:16px;line-height:1.6;color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;font-weight:400;margin-top:4px"></div>
+      </div>
+    </div>
+
+    <div id="aiLoading" style="display:none;margin-top:18px;text-align:center;color:var(--ink-soft);font-size:13px">
+      <span style="animation:pulse 1s infinite;display:inline-block">🎀 Calculando…</span>
+    </div>
+
+    <div style="margin-top:16px">
+      <div style="font-size:11px;color:var(--ink-soft);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;opacity:0.7">Preguntas frecuentes</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button onclick="setQ('¿Cuánto es el 30% de 1500?')" class="quick-q">30% de 1500</button>
+        <button onclick="setQ('Si mi costo es 80 y quiero 60% de margen, ¿cuánto cobro?')" class="quick-q">Precio con margen</button>
+        <button onclick="setQ('Vendo 25 productos a 120 cada uno, ¿cuál es mi ingreso total?')" class="quick-q">Ingreso total</button>
+        <button onclick="setQ('Si gano 8500 al mes y gasto 3200, ¿cuánto me queda neto?')" class="quick-q">Ganancia neta</button>
+        <button onclick="setQ('¿Cuántos productos debo vender a 95 pesos para ganar 5000?')" class="quick-q">Meta de piezas</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>✿ Planner Papelería Creativa · Hecho con amor para tu negocio ✿</footer>
+
+<!-- NOTAS Y TIPS — fuera del grid principal -->
+<div style="max-width:1200px;margin:0 auto;padding:0 24px 40px;display:grid;grid-template-columns:1fr 1fr;gap:20px">
+
+  <!-- STICKY NOTES -->
+  <div style="background:#ffffff;border-radius:22px;padding:28px;border:1.5px solid rgba(251,218,229,0.8);box-shadow:0 4px 28px rgba(239,163,199,0.12);position:relative;overflow:hidden">
+    <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#FBDAE5,#EFA3C7,#FCBDD7)"></div>
+    <div style="position:absolute;top:12px;right:18px;font-size:18px;color:#FCBDD7;opacity:0.5">✿</div>
+    <div style="font-size:22px;margin-bottom:6px">📝</div>
+    <div style="font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#EFA3C7;font-weight:600;margin-bottom:8px">Notas</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#050505;margin:0">Mis Sticky Notes</h2>
+      <button onclick="addSticky()" style="display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:20px;border:none;background:linear-gradient(135deg,#EFA3C7,#FCBDD7);color:white;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 3px 12px rgba(239,163,199,0.35);transition:all 0.2s" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='none'">
+        + Nueva nota
+      </button>
+    </div>
+
+    <div id="stickyBoard" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;min-height:80px">
+      <!-- sticky notes render here -->
+    </div>
+    <div style="text-align:right;font-size:11px;color:#96989A;margin-top:12px;font-style:italic">Se guarda automáticamente ✓</div>
+  </div>
+
+  <!-- TIPS DE USO -->
+  <div style="background:#ffffff;border-radius:22px;padding:28px;border:1.5px solid rgba(251,218,229,0.8);box-shadow:0 4px 28px rgba(239,163,199,0.12);position:relative;overflow:hidden">
+    <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#E0E0E0,#96989A)"></div>
+    <div style="position:absolute;top:12px;right:18px;font-size:18px;color:#FCBDD7;opacity:0.5">✿</div>
+    <div style="font-size:22px;margin-bottom:6px">💡</div>
+    <div style="font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#96989A;font-weight:600;margin-bottom:8px">Guía</div>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#050505;margin-bottom:18px">Tips para Usar tu Planner</h2>
+
+    <div style="display:flex;flex-direction:column;gap:12px">
+
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:#fdf6f9;border-radius:12px;border-left:3px solid #EFA3C7">
+        <span style="font-size:18px;flex-shrink:0">⚠️</span>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:#050505;margin-bottom:3px">Guarda tu reporte al final del día</div>
+          <div style="font-size:12px;color:#96989A;line-height:1.6">Los datos se guardan en <strong>tu navegador</strong>, no en la nube. Si limpias el caché o cambias de navegador, podrías perderlos. <strong>Usa el botón "Exportar Reporte Completo"</strong> cada día para tener un respaldo seguro.</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:#fdf6f9;border-radius:12px;border-left:3px solid #FCBDD7">
+        <span style="font-size:18px;flex-shrink:0">🔒</span>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:#050505;margin-bottom:3px">Tus datos son solo tuyos</div>
+          <div style="font-size:12px;color:#96989A;line-height:1.6">Esta app funciona completamente en tu dispositivo. Nadie más tiene acceso a tu información — ni clientes, ni otras usuarias, ni nosotros.</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:#fdf6f9;border-radius:12px;border-left:3px solid #96989A">
+        <span style="font-size:18px;flex-shrink:0">📱</span>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:#050505;margin-bottom:3px">Un dispositivo, un planner</div>
+          <div style="font-size:12px;color:#96989A;line-height:1.6">Cada persona que use este planner tiene sus propios datos independientes. Si lo abres en otro celular o computadora, verás el planner vacío — cada dispositivo guarda su propia información.</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:#fdf6f9;border-radius:12px;border-left:3px solid #FBDAE5">
+        <span style="font-size:18px;flex-shrink:0">🗓️</span>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:#050505;margin-bottom:3px">Rutina recomendada</div>
+          <div style="font-size:12px;color:#96989A;line-height:1.6"><strong>Lunes:</strong> actualiza metas y tareas · <strong>Diario:</strong> registra ventas y clientes · <strong>Viernes:</strong> exporta tu reporte semanal · <strong>Fin de mes:</strong> exporta reporte completo y limpia para el nuevo mes.</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:#fdf6f9;border-radius:12px;border-left:3px solid #EFA3C7">
+        <span style="font-size:18px;flex-shrink:0">🤖</span>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:#050505;margin-bottom:3px">Calculadora IA</div>
+          <div style="font-size:12px;color:#96989A;line-height:1.6">Puedes preguntarle cualquier cosa de tu negocio en español: porcentajes, márgenes, metas de ventas, precios… Escribe tu pregunta como si hablaras con una asistente.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER BRANDED -->
+<div style="background:linear-gradient(160deg,#FBDAE5 0%,#ffffff 50%,#FCBDD7 100%);border-top:3px solid #EFA3C7;padding:40px 24px 32px;text-align:center;margin-top:20px">
+  <div style="font-size:28px;margin-bottom:12px;filter:drop-shadow(0 2px 6px rgba(239,163,199,0.4))">🌸 ✿ 🌸</div>
+  <div style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:#050505;margin-bottom:6px;letter-spacing:-0.5px">
+    Planner <em style="color:#EFA3C7;font-style:italic">Papelería Creativa</em>
+  </div>
+  <div style="font-size:12px;color:#96989A;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px">
+    © 2026 · Todos los derechos reservados
+  </div>
+  <div style="width:60px;height:1px;background:linear-gradient(90deg,transparent,#EFA3C7,transparent);margin:0 auto 20px"></div>
+  <div style="font-size:13px;color:#96989A;margin-bottom:8px;font-style:italic">Made with love for</div>
+  <a href="https://johadigitalseattle.com" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:10px 24px;background:linear-gradient(135deg,#EFA3C7,#FCBDD7);border-radius:30px;color:white;text-decoration:none;font-size:14px;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:0.3px;box-shadow:0 4px 18px rgba(239,163,199,0.4);transition:all 0.2s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(239,163,199,0.5)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 18px rgba(239,163,199,0.4)'">
+    🌐 johadigitalseattle.com
+  </a>
+  <div style="margin-top:20px;font-size:11px;color:#E0E0E0;letter-spacing:1px">
+    Desarrollado con ✦ tecnología IA ✦ para emprendedoras creativas
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<!-- AUTOSAVE BADGE -->
+<div class="autosave-badge" id="autosaveBadge">
+  <div class="dot" id="autosaveDot"></div>
+  <span id="autosaveLabel">Guardado ✓</span>
+</div>
+
+<!-- FAB EXPORT ALL -->
+<button class="fab-export" onclick="openExportModal()">✦ Exportar Reporte Completo</button>
+
+<!-- EXPORT ALL MODAL -->
+<div class="modal-overlay" id="exportModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeExportModal()">✕</button>
+    <div style="font-size:24px;margin-bottom:8px">📋</div>
+    <h3>Exportar Reporte</h3>
+    <p>Selecciona las secciones que quieres incluir en tu archivo:</p>
+    <div class="check-option selected" onclick="toggleOption(this)">
+      <div class="custom-cb">✓</div><span class="option-icon">🎯</span>
+      <div><div class="option-label">Ventas &amp; Progreso</div><div class="option-sub">Meta del mes, progreso y total de ventas</div></div>
+      <input type="checkbox" checked data-key="ventas">
+    </div>
+    <div class="check-option selected" onclick="toggleOption(this)">
+      <div class="custom-cb">✓</div><span class="option-icon">🧮</span>
+      <div><div class="option-label">Calculadora de Precio</div><div class="option-sub">Costos, márgenes y precio ideal</div></div>
+      <input type="checkbox" checked data-key="precio">
+    </div>
+    <div class="check-option selected" onclick="toggleOption(this)">
+      <div class="custom-cb">✓</div><span class="option-icon">💰</span>
+      <div><div class="option-label">Ingresos &amp; Gastos</div><div class="option-sub">Todos tus movimientos financieros del mes</div></div>
+      <input type="checkbox" checked data-key="finanzas">
+    </div>
+    <div class="check-option selected" onclick="toggleOption(this)">
+      <div class="custom-cb">✓</div><span class="option-icon">📦</span>
+      <div><div class="option-label">Control de Inventario</div><div class="option-sub">Stock y estado de todos tus productos</div></div>
+      <input type="checkbox" checked data-key="inventario">
+    </div>
+    <div class="check-option selected" onclick="toggleOption(this)">
+      <div class="custom-cb">✓</div><span class="option-icon">⭐</span>
+      <div><div class="option-label">Lo Más Vendido</div><div class="option-sub">Ranking de productos con ingresos</div></div>
+      <input type="checkbox" checked data-key="topventas">
+    </div>
+    <div class="modal-actions">
+      <button class="btn-modal-csv" onclick="exportAllCSV()">📊 Todo en CSV</button>
+      <button class="btn-modal-doc" onclick="exportAllDOC()">📄 Todo en DOC</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currency = {code:'MXN',symbol:'$',label:'MXN'};
+  let currentMonth = new Date(2026,1,1);
+  let markedDays = new Set();
+  const MONTHS=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const DAYS=['D','L','M','M','J','V','S'];
+
+  function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400);}
+
+  function setCurrency(code,symbol,label,btn){
+    currency={code,symbol,label};
+    document.querySelectorAll('.currency-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    calcMeta();calcPrecio();calcFinanzas();calcBS();
+  }
+
+  function fmt(n){
+    if(isNaN(n)||n===null)return'—';
+    const s=n.toLocaleString('es-MX',{maximumFractionDigits:0});
+    return currency.symbol+s+' '+currency.code;
+  }
+
+  function prevMonth(){currentMonth.setMonth(currentMonth.getMonth()-1);markedDays.clear();updateMonth();renderCal();}
+  function nextMonth(){currentMonth.setMonth(currentMonth.getMonth()+1);markedDays.clear();updateMonth();renderCal();}
+  function updateMonth(){
+    const l=MONTHS[currentMonth.getMonth()]+' '+currentMonth.getFullYear();
+    document.getElementById('monthName').textContent=l;
+    document.getElementById('calMonthLabel').textContent=l;
+  }
+
+  function calcMeta(){
+    const meta=parseFloat(document.getElementById('metaVentas').value)||0;
+    const actual=parseFloat(document.getElementById('ventasActuales').value)||0;
+    const pct=meta>0?Math.min(100,actual/meta*100):0;
+    const falta=Math.max(0,meta-actual);
+    document.getElementById('metaBar').style.width=pct+'%';
+    document.getElementById('metaPct').textContent=pct.toFixed(0)+'% de la meta';
+    document.getElementById('metaFaltante').textContent=falta>0?'Falta: '+fmt(falta):'🎉 ¡Meta alcanzada!';
+    document.getElementById('totalVentas').textContent=fmt(actual);
+  }
+
+  function calcPrecio(){
+    const mat=parseFloat(document.getElementById('costoMat').value)||0;
+    const min=parseFloat(document.getElementById('tiempoMin').value)||0;
+    const hora=parseFloat(document.getElementById('tarifaHora').value)||0;
+    const extra=parseFloat(document.getElementById('gastosExtra').value)||0;
+    const mg=parseFloat(document.getElementById('margen').value)||0;
+    const tc=(min/60)*hora;
+    const base=mat+tc+extra;
+    const ideal=base*(1+mg/100);
+    document.getElementById('precioMin').textContent=fmt(base);
+    document.getElementById('precioIdeal').textContent=fmt(ideal);
+    const gan=ideal-base;
+    document.getElementById('priceTip').textContent=ideal>0?`💡 Ganas ${fmt(gan)} por pieza · 20 piezas/mes = ${fmt(gan*20)}`:'Ingresa tus costos ✨';
+  }
+
+  function calcFinanzas(){
+    const ing=(parseFloat(document.getElementById('ingOnline').value)||0)+(parseFloat(document.getElementById('ingFeria').value)||0)+(parseFloat(document.getElementById('ingCustom').value)||0)+(parseFloat(document.getElementById('ingOtros').value)||0);
+    const gas=(parseFloat(document.getElementById('gastoMat').value)||0)+(parseFloat(document.getElementById('gastoEnvio').value)||0)+(parseFloat(document.getElementById('gastoPlat').value)||0)+(parseFloat(document.getElementById('gastoPub').value)||0);
+    const neta=ing-gas;
+    const mg=ing>0?(neta/ing*100):0;
+    document.getElementById('sumIngresos').textContent=fmt(ing);
+    document.getElementById('sumGastos').textContent=fmt(gas);
+    document.getElementById('sumNeta').textContent=fmt(neta);
+    document.getElementById('sumNeta').style.color=neta>=0?'var(--sage)':'#c04040';
+    document.getElementById('margenReal').textContent=mg.toFixed(0)+'%';
+    document.getElementById('margenBar').style.width=Math.max(0,Math.min(100,mg))+'%';
+  }
+
+  function showTab(name,el){
+    ['ingresos','gastos','resumen'].forEach(t=>document.getElementById('tab-'+t).style.display='none');
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.getElementById('tab-'+name).style.display='block';
+    el.classList.add('active');
+    if(name==='resumen')calcFinanzas();
+  }
+
+  function toggleCheck(li){
+    if(event.target.classList.contains('check-delete'))return;
+    li.classList.toggle('done');
+    li.querySelector('.check-box').textContent=li.classList.contains('done')?'✓':'';
+    updateCheckProgress();
+  }
+  function deleteTask(e,span){e.stopPropagation();span.closest('li').remove();updateCheckProgress();}
+  function updateCheckProgress(){
+    const all=document.querySelectorAll('#checklist li');
+    const done=document.querySelectorAll('#checklist li.done');
+    document.getElementById('checkBar').style.width=all.length?(done.length/all.length*100)+'%':'0%';
+    document.getElementById('checkCount').textContent=done.length+'/'+all.length;
+  }
+  function addTask(){
+    const input=document.getElementById('newTaskInput');
+    const text=input.value.trim();
+    if(!text)return;
+    const li=document.createElement('li');
+    li.onclick=function(){toggleCheck(this);};
+    li.innerHTML=`<span class="check-box"></span><span class="task-text">${text}</span><span class="check-delete" onclick="deleteTask(event,this)">✕</span>`;
+    document.getElementById('checklist').appendChild(li);
+    input.value='';
+    updateCheckProgress();
+    showToast('✓ Tarea agregada');
+  }
+
+  function renderCal(){
+    const grid=document.getElementById('calGrid');
+    grid.innerHTML='';
+    DAYS.forEach(d=>{const el=document.createElement('div');el.className='cal-day-name';el.textContent=d;grid.appendChild(el);});
+    const y=currentMonth.getFullYear(),m=currentMonth.getMonth();
+    const first=new Date(y,m,1).getDay();
+    const days=new Date(y,m+1,0).getDate();
+    for(let i=0;i<first;i++){const el=document.createElement('div');grid.appendChild(el);}
+    for(let d=1;d<=days;d++){
+      const el=document.createElement('div');
+      el.className='cal-day'+(markedDays.has(d)?' has-post':'');
+      el.innerHTML=`<span class="day-num">${d}</span>`;
+      el.onclick=()=>{markedDays.has(d)?markedDays.delete(d):markedDays.add(d);el.classList.toggle('has-post');updateCalStats();};
+      grid.appendChild(el);
+    }
+    updateCalStats();
+  }
+  function updateCalStats(){
+    const c=markedDays.size;
+    const weeks=new Date(currentMonth.getFullYear(),currentMonth.getMonth()+1,0).getDate()/7;
+    document.getElementById('postsCount').textContent=c;
+    document.getElementById('daysWithContent').textContent=c;
+    document.getElementById('weekFreq').textContent=(c/weeks).toFixed(1)+'/sem';
+  }
+
+  function addInventoryRow(){
+    const tbody=document.getElementById('inventoryList');
+    const tr=document.createElement('tr');
+    tr.className='inv-tr';
+    tr.innerHTML=`<td><input type="text" class="inv-name" placeholder="Nombre del producto" oninput="triggerSave()"></td><td><input type="number" class="inv-qty" value="0" oninput="updateStock(this);triggerSave()"></td><td><span class="stock-badge stock-out">Agotado</span></td><td><span class="row-del" onclick="this.closest('tr').remove();triggerSave()">✕</span></td>`;
+    tbody.appendChild(tr);
+    showToast('📦 Producto agregado');
+  }
+  function updateStock(el){
+    const td=el.closest('tr').querySelector('td:nth-child(3)');
+    const qty=parseInt(el.value)||0;
+    const b=td.querySelector('.stock-badge');
+    b.className='stock-badge';
+    if(qty===0){b.classList.add('stock-out');b.textContent='Agotado';}
+    else if(qty<=5){b.classList.add('stock-low');b.textContent='Poco';}
+    else{b.classList.add('stock-ok');b.textContent='OK';}
+  }
+
+  function calcBS(){
+    const rows=document.querySelectorAll('#bestsellerList .bs-tr');
+    let totU=0,totR=0;
+    rows.forEach((row,i)=>{
+      const rank=row.querySelector('.bs-rank');
+      rank.className='bs-rank';
+      if(i===0)rank.classList.add('g');
+      else if(i===1)rank.classList.add('s');
+      else if(i===2)rank.classList.add('b');
+      rank.textContent=i+1;
+      const u=parseInt(row.querySelector('.bs-num')?.value)||0;
+      const p=parseFloat(row.querySelector('.bs-price')?.value)||0;
+      const rev=u*p; totU+=u; totR+=rev;
+      const revEl=row.querySelector('.bs-revenue-label');
+      if(revEl) revEl.textContent=rev>0?fmt(rev):'—';
+    });
+    document.getElementById('bsTotals').innerHTML=`<div class="two-col"><div class="result-box hot"><div class="result-label">Total unidades vendidas</div><div class="result-value">${totU}</div></div><div class="result-box"><div class="result-label">Ingresos totales del mes</div><div class="result-value" style="font-size:22px">${fmt(totR)}</div></div></div>`;
+  }
+  function addBSRow(){
+    const tbody=document.querySelector('#bestsellerList tbody');
+    const n=tbody.querySelectorAll('.bs-tr').length+1;
+    const tr=document.createElement('tr');
+    tr.className='bs-tr';
+    tr.innerHTML=`<td><span class="bs-rank">${n}</span></td><td><input type="text" class="bs-name-input" placeholder="Nombre del producto" oninput="calcBS();triggerSave()"></td><td><input type="number" class="bs-num" value="0" oninput="calcBS();triggerSave()"></td><td><input type="number" class="bs-price" placeholder="0.00" oninput="calcBS();triggerSave()"></td><td><span class="bs-revenue-label">—</span></td><td><span class="row-del" onclick="this.closest('tr').remove();calcBS();triggerSave()">✕</span></td>`;
+    tbody.appendChild(tr);
+    calcBS();
+    showToast('⭐ Fila agregada');
+  }
+
+  // ─── MINI CALCULADORA ─────────────────────────────────────────
+  let calcCurrent = '0', calcPrev = '', calcOp = null, calcReset = false;
+
+  function calcDisplay(val, expr) {
+    const d = document.getElementById('calcDisplay');
+    const e = document.getElementById('calcExpr');
+    if (d) d.textContent = val.length > 12 ? parseFloat(val).toExponential(4) : val;
+    if (e) e.textContent = expr || '\u00a0';
+  }
+
+  function calcFn(type, val) {
+    if (type === 'clear') {
+      calcCurrent = '0'; calcPrev = ''; calcOp = null; calcReset = false;
+      calcDisplay('0', '');
+    } else if (type === 'num') {
+      if (calcReset) { calcCurrent = val; calcReset = false; }
+      else calcCurrent = calcCurrent === '0' && val !== '.' ? val : calcCurrent + val;
+      // prevent double dot
+      const dots = (calcCurrent.match(/\./g)||[]).length;
+      if (dots > 1) calcCurrent = calcCurrent.slice(0,-1);
+      calcDisplay(calcCurrent);
+    } else if (type === 'dot') {
+      if (calcReset) { calcCurrent = '0.'; calcReset = false; }
+      else if (!calcCurrent.includes('.')) calcCurrent += '.';
+      calcDisplay(calcCurrent);
+    } else if (type === 'sign') {
+      calcCurrent = String(parseFloat(calcCurrent) * -1);
+      calcDisplay(calcCurrent);
+    } else if (type === 'percent') {
+      calcCurrent = String(parseFloat(calcCurrent) / 100);
+      calcDisplay(calcCurrent);
+    } else if (type === 'op') {
+      if (calcOp && !calcReset) calcFn('equal', null, true);
+      calcPrev = calcCurrent; calcOp = val; calcReset = true;
+      const sym = {'+':'+','-':'−','*':'×','/':'÷'}[val];
+      calcDisplay(calcCurrent, calcPrev + ' ' + sym);
+    } else if (type === 'equal') {
+      if (!calcOp) return;
+      const a = parseFloat(calcPrev), b = parseFloat(calcCurrent);
+      let res;
+      if (calcOp==='+') res=a+b;
+      else if (calcOp==='-') res=a-b;
+      else if (calcOp==='*') res=a*b;
+      else if (calcOp==='/') res = b===0 ? 'Error' : a/b;
+      const sym = {'+':'+','-':'−','*':'×','/':'÷'}[calcOp];
+      const expr = calcPrev + ' ' + sym + ' ' + calcCurrent + ' =';
+      calcCurrent = res === 'Error' ? 'Error' : String(Math.round(res * 1e10) / 1e10);
+      calcOp = null; calcReset = true;
+      calcDisplay(calcCurrent, expr);
+    }
+  }
+
+
+  const STICKY_COLORS = [
+    { bg:'#FFF3F8', title:'#c4698f', border:'#FCBDD7' },  // rosa suave
+    { bg:'#FFF8E7', title:'#b08c2a', border:'#FFE4A0' },  // amarillo
+    { bg:'#F0FAF1', title:'#3a7d44', border:'#C8E6CA' },  // verde
+    { bg:'#F0F4FF', title:'#3a5fc4', border:'#C5D0F5' },  // azul
+    { bg:'#FDF0FF', title:'#8a3ac4', border:'#E2C5F5' },  // lila
+    { bg:'#FFF0ED', title:'#c4553a', border:'#F5C5BB' },  // coral
+  ];
+  let stickyIdCounter = 0;
+
+  function addSticky(titleVal='', bodyVal='', colorIdx=null) {
+    const idx = colorIdx !== null ? colorIdx : (stickyIdCounter % STICKY_COLORS.length);
+    const col = STICKY_COLORS[idx];
+    const id = 'sticky_' + (++stickyIdCounter);
+
+    const div = document.createElement('div');
+    div.className = 'sticky';
+    div.dataset.colorIdx = idx;
+    div.id = id;
+    div.style.background = col.bg;
+    div.style.border = '1.5px solid ' + col.border;
+
+    div.innerHTML = `
+      <button class="sticky-del" onclick="deleteSticky('${id}')">✕</button>
+      <input class="sticky-title" placeholder="Título…" value="${titleVal.replace(/"/g,'&quot;')}" style="color:${col.title}" oninput="triggerSave()">
+      <div style="height:1px;background:${col.border};opacity:0.6"></div>
+      <textarea class="sticky-body" placeholder="Escribe tu nota aquí… 🌸" oninput="triggerSave()" style="color:#444">${bodyVal}</textarea>
+    `;
+
+    document.getElementById('stickyBoard').appendChild(div);
+    div.querySelector('.sticky-body').focus();
+    triggerSave();
+  }
+
+  function deleteSticky(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.style.transform = 'scale(0.8)';
+      el.style.opacity = '0';
+      el.style.transition = 'all 0.2s';
+      setTimeout(() => { el.remove(); triggerSave(); }, 200);
+    }
+  }
+
+  function getStickies() {
+    return Array.from(document.querySelectorAll('#stickyBoard .sticky')).map(s => ({
+      title: s.querySelector('.sticky-title')?.value || '',
+      body: s.querySelector('.sticky-body')?.value || '',
+      colorIdx: parseInt(s.dataset.colorIdx) || 0
+    }));
+  }
+
+  function renderStickies(list) {
+    document.getElementById('stickyBoard').innerHTML = '';
+    stickyIdCounter = 0;
+    list.forEach(s => addSticky(s.title, s.body, s.colorIdx));
+  }
+
+
+  function calcClients(){
+    const rows=document.querySelectorAll('#clientList .inv-tr');
+    let total=0;
+    const byClient={};
+    rows.forEach(row=>{
+      const inputs=row.querySelectorAll('input');
+      const name=(inputs[0]?.value||'').trim();
+      const amount=parseFloat(inputs[2]?.value)||0;
+      total+=amount;
+      if(name){ byClient[name]=(byClient[name]||0)+amount; }
+    });
+    document.getElementById('clientCount').textContent=rows.length;
+    document.getElementById('clientTotal').textContent=fmt(total);
+    // Top client
+    let topName='—', topAmt=0;
+    Object.entries(byClient).forEach(([n,a])=>{ if(a>topAmt){topAmt=a;topName=n;} });
+    document.getElementById('topClient').textContent=topName+(topAmt>0?' · '+fmt(topAmt):'');
+  }
+  function addClientRow(){
+    const tbody=document.getElementById('clientList');
+    const tr=document.createElement('tr');
+    tr.className='inv-tr';
+    tr.innerHTML=`<td><input type="text" class="inv-name" placeholder="Nombre del cliente" oninput="calcClients();triggerSave()"></td><td><input type="text" class="inv-name" placeholder="Producto comprado" oninput="triggerSave()"></td><td><input type="number" class="inv-qty" style="text-align:right" placeholder="0.00" oninput="calcClients();triggerSave()"></td><td><input type="text" class="inv-name" style="text-align:center" placeholder="dd/mm/aaaa" oninput="triggerSave()"></td><td><span class="row-del" onclick="this.closest('tr').remove();calcClients();triggerSave()">✕</span></td>`;
+    tbody.appendChild(tr);
+    calcClients();
+    showToast('👥 Cliente agregado');
+  }
+
+
+  function setQ(text){ document.getElementById('aiQuestion').value=text; document.getElementById('aiQuestion').focus(); }
+
+  async function askAI(){
+    const q=document.getElementById('aiQuestion').value.trim();
+    if(!q)return;
+    document.getElementById('aiResult').style.display='none';
+    document.getElementById('aiLoading').style.display='block';
+    document.getElementById('aiBtn').disabled=true;
+    document.getElementById('aiBtn').textContent='Calculando…';
+    try {
+      const response=await fetch('https://api.anthropic.com/v1/messages',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          model:'claude-sonnet-4-20250514',
+          max_tokens:400,
+          system:`Eres una calculadora de negocios para una tienda de papelería creativa. La moneda es: ${currency.code} (símbolo: ${currency.symbol}). Responde siempre en español, breve y claro. Muestra el resultado principal primero, luego una explicación corta de máximo 2 líneas. Usa el símbolo de moneda. Sin markdown, solo texto plano. Sé amable y usa un emoji relevante al inicio.`,
+          messages:[{role:'user',content:q}]
+        })
+      });
+      const data=await response.json();
+      const answer=data.content?.[0]?.text||'No pude calcular eso, intenta de nuevo.';
+      document.getElementById('aiAnswer').textContent=answer;
+      document.getElementById('aiResult').style.display='block';
+    } catch(e){
+      document.getElementById('aiAnswer').textContent='❌ Error al conectar. Revisa tu conexión e intenta de nuevo.';
+      document.getElementById('aiResult').style.display='block';
+    }
+    document.getElementById('aiLoading').style.display='none';
+    document.getElementById('aiBtn').disabled=false;
+    document.getElementById('aiBtn').textContent='✦ Calcular';
+  }
+
+  // EXPORTS
+  function dl(name,content,type='text/plain'){
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([content],{type}));
+    a.download=name; a.click();
+  }
+  function monthSlug(){return document.getElementById('monthName').textContent.replace(' ','_');}
+
+  function exportVentasCSV(){const m=parseFloat(document.getElementById('metaVentas').value)||0,a=parseFloat(document.getElementById('ventasActuales').value)||0;dl(`ventas_${monthSlug()}.csv`,`Reporte Ventas - ${document.getElementById('monthName').textContent}\n\nConcepto,Valor,Moneda\nMeta,${m},${currency.code}\nVentas,${a},${currency.code}\nProgreso,${m>0?(a/m*100).toFixed(1):0}%,\nFaltante,${Math.max(0,m-a)},${currency.code}\n`,'text/csv');showToast('📊 CSV descargado');}
+  function exportVentasDOC(){const m=parseFloat(document.getElementById('metaVentas').value)||0,a=parseFloat(document.getElementById('ventasActuales').value)||0,mn=document.getElementById('monthName').textContent;dl(`ventas_${monthSlug()}.txt`,`REPORTE DE VENTAS — ${mn}\n${'='.repeat(38)}\n\nMeta del mes:      ${fmt(m)}\nVentas realizadas: ${fmt(a)}\nProgreso:          ${m>0?(a/m*100).toFixed(0):0}%\nFaltante:          ${fmt(Math.max(0,m-a))}\n\nGenerado con Planner Papelería Creativa ✿\n`);showToast('📄 DOC descargado');}
+
+  function exportPrecioCSV(){const mat=document.getElementById('costoMat').value||0,min=document.getElementById('tiempoMin').value||0,hora=document.getElementById('tarifaHora').value||0,extra=document.getElementById('gastosExtra').value||0,mg=document.getElementById('margen').value||0,tc=(min/60)*hora,base=parseFloat(mat)+tc+parseFloat(extra),ideal=base*(1+mg/100);dl('calculadora_precio.csv',`Calculadora de Precio\n\nConcepto,Valor,Moneda\nMateriales,${mat},${currency.code}\nTiempo,${tc.toFixed(2)},${currency.code}\nGastos extra,${extra},${currency.code}\nMargen,${mg}%,\nPrecio mínimo,${base.toFixed(2)},${currency.code}\nPrecio ideal,${ideal.toFixed(2)},${currency.code}\nGanancia,${(ideal-base).toFixed(2)},${currency.code}\n`,'text/csv');showToast('📊 CSV descargado');}
+  function exportPrecioDOC(){const mat=document.getElementById('costoMat').value||0,min=document.getElementById('tiempoMin').value||0,hora=document.getElementById('tarifaHora').value||0,extra=document.getElementById('gastosExtra').value||0,mg=document.getElementById('margen').value||0,tc=(min/60)*hora,base=parseFloat(mat)+tc+parseFloat(extra),ideal=base*(1+mg/100);dl('calculadora_precio.txt',`CALCULADORA DE PRECIO\n${'='.repeat(38)}\n\nMateriales:     ${currency.symbol}${mat}\nCosto tiempo:   ${currency.symbol}${tc.toFixed(2)}\nGastos extra:   ${currency.symbol}${extra}\nMargen:         ${mg}%\n\nPRECIO MÍNIMO:  ${fmt(base)}\nPRECIO IDEAL:   ${fmt(ideal)}\nGANANCIA/PIEZA: ${fmt(ideal-base)}\n\nGenerado con Planner Papelería Creativa ✿\n`);showToast('📄 DOC descargado');}
+
+  function exportFinanzasCSV(){const ing=(parseFloat(document.getElementById('ingOnline').value)||0)+(parseFloat(document.getElementById('ingFeria').value)||0)+(parseFloat(document.getElementById('ingCustom').value)||0)+(parseFloat(document.getElementById('ingOtros').value)||0),gas=(parseFloat(document.getElementById('gastoMat').value)||0)+(parseFloat(document.getElementById('gastoEnvio').value)||0)+(parseFloat(document.getElementById('gastoPlat').value)||0)+(parseFloat(document.getElementById('gastoPub').value)||0);dl(`finanzas_${monthSlug()}.csv`,`Reporte Financiero - ${document.getElementById('monthName').textContent}\n\nTipo,Concepto,Valor,Moneda\nIngreso,Online,${document.getElementById('ingOnline').value||0},${currency.code}\nIngreso,Feria,${document.getElementById('ingFeria').value||0},${currency.code}\nIngreso,Custom,${document.getElementById('ingCustom').value||0},${currency.code}\nIngreso,Otros,${document.getElementById('ingOtros').value||0},${currency.code}\nGasto,Materiales,${document.getElementById('gastoMat').value||0},${currency.code}\nGasto,Envíos,${document.getElementById('gastoEnvio').value||0},${currency.code}\nGasto,Plataformas,${document.getElementById('gastoPlat').value||0},${currency.code}\nGasto,Publicidad,${document.getElementById('gastoPub').value||0},${currency.code}\n\nTotal,Ingresos,${ing},${currency.code}\nTotal,Gastos,${gas},${currency.code}\nTotal,Ganancia neta,${ing-gas},${currency.code}\n`,'text/csv');showToast('📊 CSV descargado');}
+  function exportFinanzasDOC(){const ing=(parseFloat(document.getElementById('ingOnline').value)||0)+(parseFloat(document.getElementById('ingFeria').value)||0)+(parseFloat(document.getElementById('ingCustom').value)||0)+(parseFloat(document.getElementById('ingOtros').value)||0),gas=(parseFloat(document.getElementById('gastoMat').value)||0)+(parseFloat(document.getElementById('gastoEnvio').value)||0)+(parseFloat(document.getElementById('gastoPlat').value)||0)+(parseFloat(document.getElementById('gastoPub').value)||0);dl(`finanzas_${monthSlug()}.txt`,`REPORTE FINANCIERO — ${document.getElementById('monthName').textContent}\n${'='.repeat(38)}\n\nINGRESOS\n  Online:      ${currency.symbol}${document.getElementById('ingOnline').value||0}\n  Feria:       ${currency.symbol}${document.getElementById('ingFeria').value||0}\n  Custom:      ${currency.symbol}${document.getElementById('ingCustom').value||0}\n  Otros:       ${currency.symbol}${document.getElementById('ingOtros').value||0}\n  TOTAL: ${fmt(ing)}\n\nGASTOS\n  Materiales:  ${currency.symbol}${document.getElementById('gastoMat').value||0}\n  Envíos:      ${currency.symbol}${document.getElementById('gastoEnvio').value||0}\n  Plataformas: ${currency.symbol}${document.getElementById('gastoPlat').value||0}\n  Publicidad:  ${currency.symbol}${document.getElementById('gastoPub').value||0}\n  TOTAL: ${fmt(gas)}\n\nGANANCIA NETA: ${fmt(ing-gas)}\n\nGenerado con Planner Papelería Creativa ✿\n`);showToast('📄 DOC descargado');}
+
+  function exportInventarioCSV(){const rows=document.querySelectorAll('#inventoryList .inventory-row');let csv=`Inventario — ${document.getElementById('monthName').textContent}\n\nProducto,Cantidad,Estado\n`;rows.forEach(r=>{const ins=r.querySelectorAll('input');const q=parseInt(ins[1]?.value)||0;csv+=`${ins[0]?.value||''},${q},${q===0?'Agotado':q<=5?'Poco':'OK'}\n`;});dl(`inventario_${monthSlug()}.csv`,csv,'text/csv');showToast('📊 CSV descargado');}
+  function exportInventarioDOC(){const rows=document.querySelectorAll('#inventoryList .inventory-row');let c=`INVENTARIO — ${document.getElementById('monthName').textContent}\n${'='.repeat(38)}\n\n`;rows.forEach((r,i)=>{const ins=r.querySelectorAll('input');const q=parseInt(ins[1]?.value)||0;c+=`${i+1}. ${ins[0]?.value||'Sin nombre'}\n   Stock: ${q} uds.  Estado: ${q===0?'Agotado':q<=5?'Poco stock':'OK'}\n\n`;});c+=`Generado con Planner Papelería Creativa ✿\n`;dl(`inventario_${monthSlug()}.txt`,c);showToast('📄 DOC descargado');}
+
+  function exportBSCSV(){const rows=document.querySelectorAll('#bestsellerList .bs-row');let csv=`Top Ventas — ${document.getElementById('monthName').textContent}\n\nRank,Producto,Unidades,Precio,Ingresos,Moneda\n`;rows.forEach((r,i)=>{const n=r.querySelector('.bs-name-input')?.value||'',u=parseInt(r.querySelector('.bs-num')?.value)||0,p=parseFloat(r.querySelector('.bs-price')?.value)||0;csv+=`${i+1},${n},${u},${p},${(u*p).toFixed(2)},${currency.code}\n`;});dl(`top_ventas_${monthSlug()}.csv`,csv,'text/csv');showToast('📊 CSV descargado');}
+  function exportBSDOC(){const rows=document.querySelectorAll('#bestsellerList .bs-row');const medals=['🥇','🥈','🥉'];let c=`TOP VENTAS DEL MES — ${document.getElementById('monthName').textContent}\n${'='.repeat(38)}\n\n`;let totU=0,totR=0;rows.forEach((r,i)=>{const n=r.querySelector('.bs-name-input')?.value||'',u=parseInt(r.querySelector('.bs-num')?.value)||0,p=parseFloat(r.querySelector('.bs-price')?.value)||0;totU+=u;totR+=u*p;c+=`${medals[i]||`${i+1}.`} ${n}\n   Unidades: ${u}  ·  Precio: ${currency.symbol}${p}  ·  Total: ${fmt(u*p)}\n\n`;});c+=`${'─'.repeat(38)}\nTotal unidades: ${totU}\nIngresos totales: ${fmt(totR)}\n\nGenerado con Planner Papelería Creativa ✿\n`;dl(`top_ventas_${monthSlug()}.txt`,c);showToast('📄 DOC descargado');}
+
+  // ─── AUTOSAVE ──────────────────────────────────────────────────
+  const SAVE_KEY = 'plannerPapeleria_v1';
+  let saveTimer = null;
+
+  function triggerSave() {
+    clearTimeout(saveTimer);
+    document.getElementById('autosaveBadge').classList.add('saving');
+    document.getElementById('autosaveLabel').textContent = 'Guardando…';
+    saveTimer = setTimeout(saveAll, 800);
+  }
+
+  function saveAll() {
+    // Collect tasks
+    const tasks = Array.from(document.querySelectorAll('#checklist li')).map(li => ({
+      text: li.querySelector('.task-text')?.textContent || '',
+      done: li.classList.contains('done')
+    }));
+
+    // Collect inventory
+    const inventory = Array.from(document.querySelectorAll('#inventoryList .inventory-row')).map(row => {
+      const ins = row.querySelectorAll('input');
+      return { name: ins[0]?.value || '', qty: ins[1]?.value || '0' };
+    });
+
+    // Collect best sellers
+    const bestsellers = Array.from(document.querySelectorAll('#bestsellerList .bs-row')).map(row => ({
+      name: row.querySelector('.bs-name-input')?.value || '',
+      units: row.querySelector('.bs-num')?.value || '0',
+      price: row.querySelector('.bs-price')?.value || '0'
+    }));
+
+    const data = {
+      currency: currency.code,
+      monthOffset: (currentMonth.getFullYear() - 2026) * 12 + (currentMonth.getMonth() - 1),
+      markedDays: Array.from(markedDays),
+      metaVentas: document.getElementById('metaVentas').value,
+      ventasActuales: document.getElementById('ventasActuales').value,
+      costoMat: document.getElementById('costoMat').value,
+      tiempoMin: document.getElementById('tiempoMin').value,
+      tarifaHora: document.getElementById('tarifaHora').value,
+      gastosExtra: document.getElementById('gastosExtra').value,
+      margen: document.getElementById('margen').value,
+      ingOnline: document.getElementById('ingOnline').value,
+      ingFeria: document.getElementById('ingFeria').value,
+      ingCustom: document.getElementById('ingCustom').value,
+      ingOtros: document.getElementById('ingOtros').value,
+      gastoMat: document.getElementById('gastoMat').value,
+      gastoEnvio: document.getElementById('gastoEnvio').value,
+      gastoPlat: document.getElementById('gastoPlat').value,
+      gastoPub: document.getElementById('gastoPub').value,
+      tasks, inventory, bestsellers,
+      stickies: getStickies()
+    };
+
+    try {
+      localStorage.setItem(SAVE_KEY, JSON.stringify(data));
+      const now = new Date();
+      const time = now.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
+      document.getElementById('autosaveBadge').classList.remove('saving');
+      document.getElementById('autosaveLabel').textContent = `Guardado ${time} ✓`;
+    } catch(e) {
+      document.getElementById('autosaveLabel').textContent = 'Error al guardar';
+    }
+  }
+
+  function loadAll() {
+    try {
+      const raw = localStorage.getItem(SAVE_KEY);
+      if (!raw) return;
+      const data = JSON.parse(raw);
+
+      // Currency
+      if (data.currency) {
+        const map = { MXN:['$','MXN'], USD:['$','USD'], EUR:['€','EUR'], COP:['$','COP'], ARS:['$','ARS'], CLP:['$','CLP'], PEN:['S/','PEN'] };
+        if (map[data.currency]) {
+          currency = { code: data.currency, symbol: map[data.currency][0], label: data.currency };
+          document.querySelectorAll('.currency-btn').forEach(b => {
+            if (b.textContent.includes(data.currency) || b.getAttribute('onclick')?.includes(`'${data.currency}'`)) b.classList.add('active');
+            else b.classList.remove('active');
+          });
+        }
+      }
+
+      // Month
+      if (data.monthOffset !== undefined) {
+        currentMonth = new Date(2026, 1 + data.monthOffset, 1);
+        updateMonth();
+      }
+
+      // Marked days
+      if (data.markedDays) { markedDays = new Set(data.markedDays); }
+
+      // Simple inputs
+      const fields = ['metaVentas','ventasActuales','costoMat','tiempoMin','tarifaHora','gastosExtra','margen','ingOnline','ingFeria','ingCustom','ingOtros','gastoMat','gastoEnvio','gastoPlat','gastoPub'];
+      fields.forEach(f => { if (data[f] !== undefined) document.getElementById(f).value = data[f]; });
+
+      // Tasks
+      if (data.tasks?.length) {
+        const cl = document.getElementById('checklist');
+        cl.innerHTML = '';
+        data.tasks.forEach(t => {
+          const li = document.createElement('li');
+          if (t.done) li.classList.add('done');
+          li.onclick = function(){ toggleCheck(this); };
+          li.innerHTML = `<span class="check-box">${t.done ? '✓' : ''}</span><span class="task-text">${t.text}</span><span class="check-delete" onclick="deleteTask(event,this)">✕</span>`;
+          cl.appendChild(li);
+        });
+        updateCheckProgress();
+      }
+
+      // Inventory
+      if (data.inventory?.length) {
+        const list = document.getElementById('inventoryList');
+        list.innerHTML = '';
+        data.inventory.forEach(item => {
+          const row = document.createElement('div');
+          row.className = 'inventory-row';
+          const qty = parseInt(item.qty) || 0;
+          const statusClass = qty === 0 ? 'stock-out' : qty <= 5 ? 'stock-low' : 'stock-ok';
+          const statusText = qty === 0 ? 'Agotado' : qty <= 5 ? 'Poco' : 'OK';
+          row.innerHTML = `<input type="text" value="${item.name}" style="margin:0;background:transparent;border:none;padding:0;font-size:13px;color:var(--ink-soft)"><input type="number" value="${item.qty}" style="width:60px;margin:0;text-align:center;padding:4px 6px;font-size:12px" oninput="updateStock(this)"><span class="stock-badge ${statusClass}">${statusText}</span><span class="row-del" onclick="this.closest('.inventory-row').remove();triggerSave()">✕</span>`;
+          list.appendChild(row);
+        });
+      }
+
+      // Best sellers
+      if (data.bestsellers?.length) {
+        const list = document.getElementById('bestsellerList');
+        list.innerHTML = '';
+        const rankClass = ['g','s','b'];
+        data.bestsellers.forEach((item, i) => {
+          const row = document.createElement('div');
+          row.className = 'bs-row';
+          row.innerHTML = `<span class="bs-rank ${rankClass[i]||''}">${i+1}</span><input type="text" class="bs-name-input" value="${item.name}" oninput="calcBS();triggerSave()"><input type="number" class="bs-num" value="${item.units}" oninput="calcBS();triggerSave()"><input type="number" class="bs-price" value="${item.price}" oninput="calcBS();triggerSave()"><span class="row-del" onclick="this.closest('.bs-row').remove();calcBS();triggerSave()">✕</span>`;
+          list.appendChild(row);
+        });
+      }
+
+      // Sticky notes
+      if (data.stickies?.length) renderStickies(data.stickies);
+      else if (data.notas) addSticky('Nota', data.notas, 0); // migrate old format
+
+      document.getElementById('autosaveLabel').textContent = 'Datos restaurados ✓';
+    } catch(e) {
+      console.log('No hay datos guardados.');
+    }
+  }
+
+  // Hook all inputs to autosave
+  function hookAutosave() {
+    document.querySelectorAll('input[type=number], input[type=text]').forEach(el => {
+      el.addEventListener('input', triggerSave);
+    });
+  }
+
+  // ─── EXPORT ALL MODAL ─────────────────────────────────────────
+  function openExportModal() { document.getElementById('exportModal').classList.add('open'); }
+  function closeExportModal() { document.getElementById('exportModal').classList.remove('open'); }
+  document.getElementById('exportModal').addEventListener('click', function(e){ if(e.target===this) closeExportModal(); });
+
+  function toggleOption(el) {
+    el.classList.toggle('selected');
+    const cb = el.querySelector('input[type=checkbox]');
+    cb.checked = !cb.checked;
+    const cbEl = el.querySelector('.custom-cb');
+    cbEl.textContent = cb.checked ? '✓' : '';
+  }
+
+  function getSelectedSections() {
+    return Array.from(document.querySelectorAll('#exportModal input[type=checkbox]'))
+      .filter(cb => cb.checked)
+      .map(cb => cb.getAttribute('data-key'));
+  }
+
+  function buildVentasBlock() {
+    const m = parseFloat(document.getElementById('metaVentas').value)||0;
+    const a = parseFloat(document.getElementById('ventasActuales').value)||0;
+    const pct = m>0?(a/m*100).toFixed(0):0;
+    return `🎯 VENTAS & PROGRESO\n${'─'.repeat(36)}\nMeta del mes:      ${fmt(m)}\nVentas realizadas: ${fmt(a)}\nProgreso:          ${pct}%\nFaltante:          ${fmt(Math.max(0,m-a))}\n`;
+  }
+  function buildPrecioBlock() {
+    const mat=parseFloat(document.getElementById('costoMat').value)||0, min=parseFloat(document.getElementById('tiempoMin').value)||0, hora=parseFloat(document.getElementById('tarifaHora').value)||0, extra=parseFloat(document.getElementById('gastosExtra').value)||0, mg=parseFloat(document.getElementById('margen').value)||0;
+    const tc=(min/60)*hora, base=mat+tc+extra, ideal=base*(1+mg/100);
+    return `🧮 CALCULADORA DE PRECIO\n${'─'.repeat(36)}\nMateriales:     ${fmt(mat)}\nCosto tiempo:   ${fmt(tc)}\nGastos extra:   ${fmt(extra)}\nMargen:         ${mg}%\nPrecio mínimo:  ${fmt(base)}\nPrecio ideal:   ${fmt(ideal)}\nGanancia/pieza: ${fmt(ideal-base)}\n`;
+  }
+  function buildFinanzasBlock() {
+    const ing=(parseFloat(document.getElementById('ingOnline').value)||0)+(parseFloat(document.getElementById('ingFeria').value)||0)+(parseFloat(document.getElementById('ingCustom').value)||0)+(parseFloat(document.getElementById('ingOtros').value)||0);
+    const gas=(parseFloat(document.getElementById('gastoMat').value)||0)+(parseFloat(document.getElementById('gastoEnvio').value)||0)+(parseFloat(document.getElementById('gastoPlat').value)||0)+(parseFloat(document.getElementById('gastoPub').value)||0);
+    return `💰 INGRESOS & GASTOS\n${'─'.repeat(36)}\nIngresos totales: ${fmt(ing)}\nGastos totales:   ${fmt(gas)}\nGanancia neta:    ${fmt(ing-gas)}\nMargen real:      ${ing>0?((ing-gas)/ing*100).toFixed(0):0}%\n`;
+  }
+  function buildInventarioBlock() {
+    const rows = document.querySelectorAll('#inventoryList .inventory-row');
+    let txt = `📦 INVENTARIO DE PRODUCTOS\n${'─'.repeat(36)}\n`;
+    rows.forEach((r,i)=>{ const ins=r.querySelectorAll('input');const q=parseInt(ins[1]?.value)||0; txt+=`${i+1}. ${ins[0]?.value||''}  |  Stock: ${q}  |  ${q===0?'AGOTADO':q<=5?'POCO':'OK'}\n`; });
+    return txt;
+  }
+  function buildTopVentasBlock() {
+    const rows = document.querySelectorAll('#bestsellerList .bs-row');
+    const medals = ['🥇','🥈','🥉'];
+    let txt = `⭐ LO MÁS VENDIDO\n${'─'.repeat(36)}\n`;
+    let totU=0, totR=0;
+    rows.forEach((r,i)=>{ const n=r.querySelector('.bs-name-input')?.value||'', u=parseInt(r.querySelector('.bs-num')?.value)||0, p=parseFloat(r.querySelector('.bs-price')?.value)||0; totU+=u; totR+=u*p; txt+=`${medals[i]||`${i+1}.`} ${n}  |  ${u} uds.  |  ${fmt(u*p)}\n`; });
+    txt += `\nTotal unidades: ${totU}  |  Ingresos totales: ${fmt(totR)}\n`;
+    return txt;
+  }
+
+  function exportAllDOC() {
+    const sections = getSelectedSections();
+    if (!sections.length) { showToast('Selecciona al menos una sección'); return; }
+    const mn = document.getElementById('monthName').textContent;
+    let content = `✿ REPORTE COMPLETO — ${mn} ✿\n${'='.repeat(38)}\nMoneda: ${currency.code}\n\n`;
+    const builders = { ventas: buildVentasBlock, precio: buildPrecioBlock, finanzas: buildFinanzasBlock, inventario: buildInventarioBlock, topventas: buildTopVentasBlock };
+    sections.forEach(s => { if(builders[s]) content += builders[s]() + '\n'; });
+    content += `${'='.repeat(38)}\nGenerado con Planner Papelería Creativa ✿\n`;
+    dl(`reporte_completo_${monthSlug()}.txt`, content);
+    closeExportModal();
+    showToast('📄 Reporte descargado');
+  }
+
+  function exportAllCSV() {
+    const sections = getSelectedSections();
+    if (!sections.length) { showToast('Selecciona al menos una sección'); return; }
+    const mn = document.getElementById('monthName').textContent;
+    let csv = `Reporte Completo,${mn},${currency.code}\n\n`;
+
+    if (sections.includes('ventas')) {
+      const m=parseFloat(document.getElementById('metaVentas').value)||0, a=parseFloat(document.getElementById('ventasActuales').value)||0;
+      csv += `VENTAS & PROGRESO\nConcepto,Valor,Moneda\nMeta,${m},${currency.code}\nVentas,${a},${currency.code}\nProgreso,${m>0?(a/m*100).toFixed(1):0}%,\nFaltante,${Math.max(0,m-a)},${currency.code}\n\n`;
+    }
+    if (sections.includes('precio')) {
+      const mat=parseFloat(document.getElementById('costoMat').value)||0, min=parseFloat(document.getElementById('tiempoMin').value)||0, hora=parseFloat(document.getElementById('tarifaHora').value)||0, extra=parseFloat(document.getElementById('gastosExtra').value)||0, mg=parseFloat(document.getElementById('margen').value)||0, tc=(min/60)*hora, base=mat+tc+extra, ideal=base*(1+mg/100);
+      csv += `CALCULADORA DE PRECIO\nConcepto,Valor,Moneda\nMateriales,${mat},${currency.code}\nTiempo,${tc.toFixed(2)},${currency.code}\nExtra,${extra},${currency.code}\nMargen,${mg}%,\nPrecio mínimo,${base.toFixed(2)},${currency.code}\nPrecio ideal,${ideal.toFixed(2)},${currency.code}\nGanancia,${(ideal-base).toFixed(2)},${currency.code}\n\n`;
+    }
+    if (sections.includes('finanzas')) {
+      const ing=(parseFloat(document.getElementById('ingOnline').value)||0)+(parseFloat(document.getElementById('ingFeria').value)||0)+(parseFloat(document.getElementById('ingCustom').value)||0)+(parseFloat(document.getElementById('ingOtros').value)||0);
+      const gas=(parseFloat(document.getElementById('gastoMat').value)||0)+(parseFloat(document.getElementById('gastoEnvio').value)||0)+(parseFloat(document.getElementById('gastoPlat').value)||0)+(parseFloat(document.getElementById('gastoPub').value)||0);
+      csv += `FINANZAS\nConcepto,Valor,Moneda\nIngresos totales,${ing},${currency.code}\nGastos totales,${gas},${currency.code}\nGanancia neta,${ing-gas},${currency.code}\n\n`;
+    }
+    if (sections.includes('inventario')) {
+      csv += `INVENTARIO\nProducto,Cantidad,Estado\n`;
+      document.querySelectorAll('#inventoryList .inventory-row').forEach(r=>{ const ins=r.querySelectorAll('input');const q=parseInt(ins[1]?.value)||0; csv+=`${ins[0]?.value||''},${q},${q===0?'Agotado':q<=5?'Poco':'OK'}\n`; });
+      csv += '\n';
+    }
+    if (sections.includes('topventas')) {
+      csv += `TOP VENTAS\nRank,Producto,Unidades,Precio,Ingresos,Moneda\n`;
+      document.querySelectorAll('#bestsellerList .bs-row').forEach((r,i)=>{ const n=r.querySelector('.bs-name-input')?.value||'', u=parseInt(r.querySelector('.bs-num')?.value)||0, p=parseFloat(r.querySelector('.bs-price')?.value)||0; csv+=`${i+1},${n},${u},${p},${(u*p).toFixed(2)},${currency.code}\n`; });
+    }
+    dl(`reporte_completo_${monthSlug()}.csv`, csv, 'text/csv');
+    closeExportModal();
+    showToast('📊 CSV completo descargado');
+  }
+
+  // ─── INIT ─────────────────────────────────────────────────────
+  updateMonth();
+  loadAll();
+  renderCal();
+  calcMeta(); calcPrecio(); calcFinanzas(); calcBS(); calcClients();
+  // Add welcome sticky if board is empty
+  if (document.querySelectorAll('#stickyBoard .sticky').length === 0) {
+    addSticky('¡Bienvenida! 🌸', 'Esta es tu primera sticky note. Puedes escribir ideas, recordatorios, pendientes o inspiración. Agrega más con el botón + Nueva nota.', 0);
+  }
+  hookAutosave();
+</script>
+</body>
+</html>
