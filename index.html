@@ -89,18 +89,44 @@
   }
   .header-stripe div { flex: 1; }
 
-  .currency-bar { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; padding: 24px 24px 28px; }
-  .currency-btn {
-    padding: 7px 18px; border-radius: 30px; border: 1.5px solid var(--blush);
-    background: var(--white); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px;
-    font-weight: 500; color: var(--ink-soft); cursor: pointer; transition: all 0.2s;
+  .currency-bar { display: flex; justify-content: center; padding: 20px 24px 24px; position: relative; z-index: 50; }
+  .currency-trigger {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 20px; border-radius: 30px;
+    border: 1.5px solid #FBDAE5; background: white;
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px;
+    font-weight: 600; color: #050505; cursor: pointer;
+    box-shadow: 0 2px 12px rgba(239,163,199,0.2);
+    transition: all 0.2s;
   }
-  .currency-btn:hover { border-color: var(--hot); color: var(--hot); }
-  .currency-btn.active {
-    background: linear-gradient(135deg, #EFA3C7, #FCBDD7);
-    border-color: #EFA3C7; color: white;
-    box-shadow: 0 4px 14px rgba(239,163,199,0.4);
+  .currency-trigger:hover { border-color: #EFA3C7; box-shadow: 0 4px 18px rgba(239,163,199,0.3); }
+  .currency-trigger .arrow { font-size: 10px; color: #EFA3C7; transition: transform 0.25s; }
+  .currency-trigger.open .arrow { transform: rotate(180deg); }
+  .currency-dropdown {
+    position: absolute; top: calc(100% + 6px);
+    background: white; border-radius: 18px;
+    border: 1.5px solid #FBDAE5;
+    box-shadow: 0 8px 32px rgba(239,163,199,0.25);
+    overflow-y: auto; max-height: 340px; min-width: 210px;
+    opacity: 0; transform: translateY(-8px) scale(0.97);
+    pointer-events: none;
+    transition: all 0.22s cubic-bezier(0.4,0,0.2,1);
+    scrollbar-width: thin; scrollbar-color: #FBDAE5 transparent;
   }
+  .currency-dropdown.open {
+    opacity: 1; transform: translateY(0) scale(1);
+    pointer-events: all;
+  }
+  .currency-option {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 20px; font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px; font-weight: 500; color: #050505;
+    cursor: pointer; transition: background 0.15s; border: none;
+    background: none; width: 100%; text-align: left;
+  }
+  .currency-option:hover { background: #fdf6f9; }
+  .currency-option.active { background: linear-gradient(135deg,#FBDAE5,#fdf6f9); color: #c4698f; font-weight: 600; }
+  .currency-option + .currency-option { border-top: 1px solid #fdf0f5; }
 
   .grid {
     display: grid;
@@ -388,6 +414,63 @@
   .card:nth-child(5){animation-delay:.25s} .card:nth-child(6){animation-delay:.30s}
   .card:nth-child(7){animation-delay:.35s}
 
+  /* ─── RESPONSIVE MÓVIL ──────────────────────────────────────── */
+  @media (max-width: 700px) {
+    .header-hero { padding: 32px 16px 28px; }
+    .header-deco { font-size: 20px; gap: 10px; }
+    h1 { font-size: 28px !important; }
+    .currency-bar { padding: 14px 12px 18px; }
+    .currency-trigger { font-size: 13px; padding: 8px 16px; }
+
+    /* Grid principal: 1 columna */
+    .grid { grid-template-columns: 1fr !important; padding: 0 12px 40px; gap: 14px; }
+    .card.full { grid-column: span 1 !important; }
+    .card { padding: 18px 14px; }
+
+    /* Notas + Tips: apiladas */
+    #notas-tips-grid { grid-template-columns: 1fr !important; padding: 0 12px 24px !important; gap: 14px !important; }
+
+    /* Sticky board: 1 columna */
+    #stickyBoard { grid-template-columns: 1fr !important; }
+
+    /* Tablas responsivas */
+    .inv-table td, .inv-table th { padding: 7px 8px; font-size: 12px; }
+    .bs-table td, .bs-table th { padding: 7px 6px; font-size: 11px; }
+
+    /* Ocultar columna fecha en tabla clientes */
+    .client-date-col { display: none !important; }
+
+    /* Resultados: 1 columna */
+    .two-col { grid-template-columns: 1fr !important; gap: 8px; }
+    .three-col { grid-template-columns: 1fr 1fr !important; gap: 8px; }
+
+    /* Calculadora centrada */
+    .calc-wrap { max-width: 100% !important; }
+    .cbtn { padding: 11px 4px; font-size: 14px; }
+
+    /* FAB y badge */
+    .fab-export { left: 12px; bottom: 14px; padding: 11px 16px; font-size: 12px; }
+    .autosave-badge { top: 8px; right: 8px; padding: 4px 10px; font-size: 10px; }
+
+    /* Modal */
+    .modal { padding: 22px 16px; margin: 12px; }
+    .modal-actions { flex-direction: column; }
+
+    /* Tips */
+    .tip-item { padding: 10px 12px !important; }
+    .tip-item-text { font-size: 11px !important; }
+
+    /* Footer */
+    #footer-branded { padding: 28px 16px 24px !important; }
+  }
+
+  @media (max-width: 400px) {
+    h1 { font-size: 24px !important; }
+    .cbtn { font-size: 13px; padding: 9px 2px; }
+    #calcDisplay { font-size: 24px !important; }
+    .three-col { grid-template-columns: 1fr !important; }
+  }
+
   footer { text-align: center; padding: 16px; font-size: 12px; color: #EFA3C7; opacity: 0.9; letter-spacing: 1px; }
 
   .toast {
@@ -495,13 +578,26 @@
 </header>
 
 <div class="currency-bar">
-  <button class="currency-btn active" onclick="setCurrency('MXN','$','MXN',this)">🇲🇽 Peso MX</button>
-  <button class="currency-btn" onclick="setCurrency('USD','$','USD',this)">🇺🇸 Dólar</button>
-  <button class="currency-btn" onclick="setCurrency('EUR','€','EUR',this)">🇪🇺 Euro</button>
-  <button class="currency-btn" onclick="setCurrency('COP','$','COP',this)">🇨🇴 Peso CO</button>
-  <button class="currency-btn" onclick="setCurrency('ARS','$','ARS',this)">🇦🇷 Peso AR</button>
-  <button class="currency-btn" onclick="setCurrency('CLP','$','CLP',this)">🇨🇱 Peso CL</button>
-  <button class="currency-btn" onclick="setCurrency('PEN','S/','PEN',this)">🇵🇪 Sol</button>
+  <div style="position:relative">
+    <button class="currency-trigger" id="currencyTrigger" onclick="toggleCurrencyMenu()">
+      <span id="currencyFlag">🇺🇸</span>
+      <span id="currencyLabel">Dólar · USD</span>
+      <span class="arrow">▼</span>
+    </button>
+    <div class="currency-dropdown" id="currencyDropdown">
+      <button class="currency-option active"  onclick="pickCurrency('USD','$','USD','🇺🇸','Dólar · USD',this)">🇺🇸 Dólar · USD</button>
+      <button class="currency-option" onclick="pickCurrency('CAD','$','CAD','🇨🇦','Dólar CA · CAD',this)">🇨🇦 Dólar CA · CAD</button>
+      <button class="currency-option" onclick="pickCurrency('EUR','€','EUR','🇪🇺','Euro · EUR',this)">🇪🇺 Euro · EUR</button>
+      <button class="currency-option" onclick="pickCurrency('MXN','$','MXN','🇲🇽','Peso MX · MXN',this)">🇲🇽 Peso MX · MXN</button>
+      <button class="currency-option" onclick="pickCurrency('DOP','$','DOP','🇩🇴','Peso DO · DOP',this)">🇩🇴 Peso DO · DOP</button>
+      <button class="currency-option" onclick="pickCurrency('COP','$','COP','🇨🇴','Peso CO · COP',this)">🇨🇴 Peso CO · COP</button>
+      <button class="currency-option" onclick="pickCurrency('CLP','$','CLP','🇨🇱','Peso CL · CLP',this)">🇨🇱 Peso CL · CLP</button>
+      <button class="currency-option" onclick="pickCurrency('ARS','$','ARS','🇦🇷','Peso AR · ARS',this)">🇦🇷 Peso AR · ARS</button>
+      <button class="currency-option" onclick="pickCurrency('PEN','S/','PEN','🇵🇪','Sol · PEN',this)">🇵🇪 Sol · PEN</button>
+      <button class="currency-option" onclick="pickCurrency('GTQ','Q','GTQ','🇬🇹','Quetzal · GTQ',this)">🇬🇹 Quetzal · GTQ</button>
+      <button class="currency-option" onclick="pickCurrency('UYU','$','UYU','🇺🇾','Peso UY · UYU',this)">🇺🇾 Peso UY · UYU</button>
+    </div>
+  </div>
 </div>
 
 <div class="grid">
@@ -686,7 +782,7 @@
     <div style="position:absolute;top:12px;right:18px;font-size:18px;color:#FCBDD7;opacity:0.5">✿</div>
 
     <!-- Calculadora física -->
-    <div style="background:linear-gradient(160deg,#e8789e 0%,#d45f8a 100%);border-radius:28px;padding:18px 16px 20px;width:100%;max-width:240px;box-shadow:0 8px 32px rgba(212,95,138,0.35),inset 0 1px 0 rgba(255,255,255,0.25),0 2px 0 #b04070;margin-top:4px">
+    <div class="calc-wrap" style="background:linear-gradient(160deg,#e8789e 0%,#d45f8a 100%);border-radius:28px;padding:18px 16px 20px;width:100%;max-width:240px;box-shadow:0 8px 32px rgba(212,95,138,0.35),inset 0 1px 0 rgba(255,255,255,0.25),0 2px 0 #b04070;margin-top:4px">
 
       <!-- Marca -->
       <div style="text-align:right;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,0.55);font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;text-transform:uppercase;margin-bottom:8px">PINKIE ✦</div>
@@ -827,7 +923,7 @@
           <th style="width:180px">Cliente</th>
           <th>Producto comprado</th>
           <th style="width:110px;text-align:right">Monto</th>
-          <th style="width:120px;text-align:center">Fecha</th>
+          <th class="client-date-col" style="width:120px;text-align:center">Fecha</th>
           <th style="width:28px"></th>
         </tr>
       </thead>
@@ -836,35 +932,35 @@
           <td><input type="text" class="inv-name" value="María García" placeholder="Nombre del cliente" oninput="calcClients();triggerSave()"></td>
           <td><input type="text" class="inv-name" value="Stickers florales A5 x3" placeholder="Producto comprado" oninput="triggerSave()"></td>
           <td><input type="number" class="inv-qty" style="text-align:right" value="255" placeholder="0.00" oninput="calcClients();triggerSave()"></td>
-          <td><input type="text" class="inv-name" style="text-align:center" value="15/02/2026" placeholder="dd/mm/aaaa" oninput="triggerSave()"></td>
+          <td class="client-date-col"><input type="text" class="inv-name" style="text-align:center" value="15/02/2026" placeholder="dd/mm/aaaa" oninput="triggerSave()"></td>
           <td><span class="row-del" onclick="this.closest('tr').remove();calcClients();triggerSave()">✕</span></td>
         </tr>
         <tr class="inv-tr">
           <td><input type="text" class="inv-name" value="Laura Soto" placeholder="Nombre del cliente" oninput="calcClients();triggerSave()"></td>
           <td><input type="text" class="inv-name" value="Washi tape botanical x2" placeholder="Producto comprado" oninput="triggerSave()"></td>
           <td><input type="number" class="inv-qty" style="text-align:right" value="240" placeholder="0.00" oninput="calcClients();triggerSave()"></td>
-          <td><input type="text" class="inv-name" style="text-align:center" value="18/02/2026" placeholder="dd/mm/aaaa" oninput="triggerSave()"></td>
+          <td class="client-date-col"><input type="text" class="inv-name" style="text-align:center" value="18/02/2026" placeholder="dd/mm/aaaa" oninput="triggerSave()"></td>
           <td><span class="row-del" onclick="this.closest('tr').remove();calcClients();triggerSave()">✕</span></td>
         </tr>
         <tr class="inv-tr">
           <td><input type="text" class="inv-name" value="Ana Ruiz" placeholder="Nombre del cliente" oninput="calcClients();triggerSave()"></td>
           <td><input type="text" class="inv-name" value="Agenda 2026 pasta dura" placeholder="Producto comprado" oninput="triggerSave()"></td>
           <td><input type="number" class="inv-qty" style="text-align:right" value="520" placeholder="0.00" oninput="calcClients();triggerSave()"></td>
-          <td><input type="text" class="inv-name" style="text-align:center" value="20/02/2026" placeholder="dd/mm/aaaa" oninput="triggerSave()"></td>
+          <td class="client-date-col"><input type="text" class="inv-name" style="text-align:center" value="20/02/2026" placeholder="dd/mm/aaaa" oninput="triggerSave()"></td>
           <td><span class="row-del" onclick="this.closest('tr').remove();calcClients();triggerSave()">✕</span></td>
         </tr>
         <tr class="inv-tr">
           <td><input type="text" class="inv-name" value="María García" placeholder="Nombre del cliente" oninput="calcClients();triggerSave()"></td>
           <td><input type="text" class="inv-name" value="Set papelería vintage" placeholder="Producto comprado" oninput="triggerSave()"></td>
           <td><input type="number" class="inv-qty" style="text-align:right" value="350" placeholder="0.00" oninput="calcClients();triggerSave()"></td>
-          <td><input type="text" class="inv-name" style="text-align:center" value="22/02/2026" placeholder="dd/mm/aaaa" oninput="triggerSave()"></td>
+          <td class="client-date-col"><input type="text" class="inv-name" style="text-align:center" value="22/02/2026" placeholder="dd/mm/aaaa" oninput="triggerSave()"></td>
           <td><span class="row-del" onclick="this.closest('tr').remove();calcClients();triggerSave()">✕</span></td>
         </tr>
         <tr class="inv-tr">
           <td><input type="text" class="inv-name" value="Sofía Méndez" placeholder="Nombre del cliente" oninput="calcClients();triggerSave()"></td>
           <td><input type="text" class="inv-name" value="Clip floral metálico x5" placeholder="Producto comprado" oninput="triggerSave()"></td>
           <td><input type="number" class="inv-qty" style="text-align:right" value="225" placeholder="0.00" oninput="calcClients();triggerSave()"></td>
-          <td><input type="text" class="inv-name" style="text-align:center" value="25/02/2026" placeholder="dd/mm/aaaa" oninput="triggerSave()"></td>
+          <td class="client-date-col"><input type="text" class="inv-name" style="text-align:center" value="25/02/2026" placeholder="dd/mm/aaaa" oninput="triggerSave()"></td>
           <td><span class="row-del" onclick="this.closest('tr').remove();calcClients();triggerSave()">✕</span></td>
         </tr>
       </tbody>
@@ -918,7 +1014,7 @@
 <footer>✿ Planner Papelería Creativa · Hecho con amor para tu negocio ✿</footer>
 
 <!-- NOTAS Y TIPS — fuera del grid principal -->
-<div style="max-width:1200px;margin:0 auto;padding:0 24px 40px;display:grid;grid-template-columns:1fr 1fr;gap:20px">
+<div id="notas-tips-grid" style="max-width:1200px;margin:0 auto;padding:0 24px 40px;display:grid;grid-template-columns:1fr 1fr;gap:20px">
 
   <!-- STICKY NOTES -->
   <div style="background:#ffffff;border-radius:22px;padding:28px;border:1.5px solid rgba(251,218,229,0.8);box-shadow:0 4px 28px rgba(239,163,199,0.12);position:relative;overflow:hidden">
@@ -949,7 +1045,7 @@
 
     <div style="display:flex;flex-direction:column;gap:12px">
 
-      <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:#fdf6f9;border-radius:12px;border-left:3px solid #EFA3C7">
+      <div class="tip-item" style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:#fdf6f9;border-radius:12px;border-left:3px solid #EFA3C7">
         <span style="font-size:18px;flex-shrink:0">⚠️</span>
         <div>
           <div style="font-size:13px;font-weight:600;color:#050505;margin-bottom:3px">Guarda tu reporte al final del día</div>
@@ -981,7 +1077,7 @@
         </div>
       </div>
 
-      <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:#fdf6f9;border-radius:12px;border-left:3px solid #EFA3C7">
+      <div class="tip-item" style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:#fdf6f9;border-radius:12px;border-left:3px solid #EFA3C7">
         <span style="font-size:18px;flex-shrink:0">🤖</span>
         <div>
           <div style="font-size:13px;font-weight:600;color:#050505;margin-bottom:3px">Calculadora IA</div>
@@ -994,7 +1090,7 @@
 </div>
 
 <!-- FOOTER BRANDED -->
-<div style="background:linear-gradient(160deg,#FBDAE5 0%,#ffffff 50%,#FCBDD7 100%);border-top:3px solid #EFA3C7;padding:40px 24px 32px;text-align:center;margin-top:20px">
+<div id="footer-branded" style="background:linear-gradient(160deg,#FBDAE5 0%,#ffffff 50%,#FCBDD7 100%);border-top:3px solid #EFA3C7;padding:40px 24px 32px;text-align:center;margin-top:20px">
   <div style="font-size:28px;margin-bottom:12px;filter:drop-shadow(0 2px 6px rgba(239,163,199,0.4))">🌸 ✿ 🌸</div>
   <div style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:#050505;margin-bottom:6px;letter-spacing:-0.5px">
     Planner <em style="color:#EFA3C7;font-style:italic">Papelería Creativa</em>
@@ -1062,7 +1158,7 @@
 </div>
 
 <script>
-  let currency = {code:'MXN',symbol:'$',label:'MXN'};
+  let currency = {code:'USD',symbol:'$',label:'USD'};
   let currentMonth = new Date(2026,1,1);
   let markedDays = new Set();
   const MONTHS=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -1070,10 +1166,33 @@
 
   function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400);}
 
+  function toggleCurrencyMenu(){
+    const trigger=document.getElementById('currencyTrigger');
+    const dropdown=document.getElementById('currencyDropdown');
+    const isOpen=dropdown.classList.contains('open');
+    dropdown.classList.toggle('open',!isOpen);
+    trigger.classList.toggle('open',!isOpen);
+  }
+  document.addEventListener('click',function(e){
+    if(!e.target.closest('.currency-bar')){
+      document.getElementById('currencyDropdown')?.classList.remove('open');
+      document.getElementById('currencyTrigger')?.classList.remove('open');
+    }
+  });
+  function pickCurrency(code,symbol,label,flag,displayLabel,btn){
+    currency={code,symbol,label};
+    document.getElementById('currencyFlag').textContent=flag;
+    document.getElementById('currencyLabel').textContent=displayLabel;
+    document.querySelectorAll('.currency-option').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('currencyDropdown').classList.remove('open');
+    document.getElementById('currencyTrigger').classList.remove('open');
+    calcMeta();calcPrecio();calcFinanzas();calcBS();calcClients();
+    showToast('💱 Moneda: '+code);
+    triggerSave();
+  }
   function setCurrency(code,symbol,label,btn){
     currency={code,symbol,label};
-    document.querySelectorAll('.currency-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
     calcMeta();calcPrecio();calcFinanzas();calcBS();
   }
 
@@ -1370,7 +1489,7 @@
     const tbody=document.getElementById('clientList');
     const tr=document.createElement('tr');
     tr.className='inv-tr';
-    tr.innerHTML=`<td><input type="text" class="inv-name" placeholder="Nombre del cliente" oninput="calcClients();triggerSave()"></td><td><input type="text" class="inv-name" placeholder="Producto comprado" oninput="triggerSave()"></td><td><input type="number" class="inv-qty" style="text-align:right" placeholder="0.00" oninput="calcClients();triggerSave()"></td><td><input type="text" class="inv-name" style="text-align:center" placeholder="dd/mm/aaaa" oninput="triggerSave()"></td><td><span class="row-del" onclick="this.closest('tr').remove();calcClients();triggerSave()">✕</span></td>`;
+    tr.innerHTML=`<td><input type="text" class="inv-name" placeholder="Nombre del cliente" oninput="calcClients();triggerSave()"></td><td><input type="text" class="inv-name" placeholder="Producto comprado" oninput="triggerSave()"></td><td><input type="number" class="inv-qty" style="text-align:right" placeholder="0.00" oninput="calcClients();triggerSave()"></td><td class="client-date-col"><input type="text" class="inv-name" style="text-align:center" placeholder="dd/mm/aaaa" oninput="triggerSave()"></td><td><span class="row-del" onclick="this.closest('tr').remove();calcClients();triggerSave()">✕</span></td>`;
     tbody.appendChild(tr);
     calcClients();
     showToast('👥 Cliente agregado');
@@ -1506,12 +1625,26 @@
 
       // Currency
       if (data.currency) {
-        const map = { MXN:['$','MXN'], USD:['$','USD'], EUR:['€','EUR'], COP:['$','COP'], ARS:['$','ARS'], CLP:['$','CLP'], PEN:['S/','PEN'] };
+        const map = {
+          USD:['$','USD','🇺🇸','Dólar · USD'],
+          CAD:['$','CAD','🇨🇦','Dólar CA · CAD'],
+          EUR:['€','EUR','🇪🇺','Euro · EUR'],
+          MXN:['$','MXN','🇲🇽','Peso MX · MXN'],
+          DOP:['$','DOP','🇩🇴','Peso DO · DOP'],
+          COP:['$','COP','🇨🇴','Peso CO · COP'],
+          CLP:['$','CLP','🇨🇱','Peso CL · CLP'],
+          ARS:['$','ARS','🇦🇷','Peso AR · ARS'],
+          PEN:['S/','PEN','🇵🇪','Sol · PEN'],
+          GTQ:['Q','GTQ','🇬🇹','Quetzal · GTQ'],
+          UYU:['$','UYU','🇺🇾','Peso UY · UYU']
+        };
         if (map[data.currency]) {
-          currency = { code: data.currency, symbol: map[data.currency][0], label: data.currency };
-          document.querySelectorAll('.currency-btn').forEach(b => {
-            if (b.textContent.includes(data.currency) || b.getAttribute('onclick')?.includes(`'${data.currency}'`)) b.classList.add('active');
-            else b.classList.remove('active');
+          const [sym,,flag,label] = map[data.currency];
+          currency = { code: data.currency, symbol: sym, label: data.currency };
+          document.getElementById('currencyFlag').textContent = flag;
+          document.getElementById('currencyLabel').textContent = label;
+          document.querySelectorAll('.currency-option').forEach(b => {
+            b.classList.toggle('active', b.getAttribute('onclick')?.includes(`'${data.currency}'`));
           });
         }
       }
