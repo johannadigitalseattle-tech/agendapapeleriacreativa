@@ -224,6 +224,37 @@
     .bs-card-del { position: absolute; top: 10px; right: 12px; color: var(--blush); cursor: pointer; font-size: 14px; }
     .bs-card-del:hover { color: var(--hot); }
   }
+
+  /* Calculadora de Negocios */
+  .calc-section-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #EFA3C7; font-weight: 600; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .calc-section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, #FBDAE5, transparent); }
+  .calc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 900px) { .calc-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .calc-grid { grid-template-columns: 1fr; } }
+  .calc-card-item { background: #fdf6f9; border-radius: 16px; padding: 16px; border: 1.5px solid #FBDAE5; transition: box-shadow 0.2s, border-color 0.2s; }
+  .calc-card-item:hover { border-color: #EFA3C7; box-shadow: 0 4px 18px rgba(239,163,199,0.18); }
+  .calc-card-item.green-item { background: #f5fbf5; border-color: #C8E6CA; }
+  .calc-card-item.green-item:hover { border-color: #8aab8e; }
+  .calc-card-item.purple-item { background: #faf5ff; border-color: #e2c5f5; }
+  .calc-card-item.purple-item:hover { border-color: #c084f5; box-shadow: 0 4px 18px rgba(192,132,245,0.15); }
+  .calc-card-title { font-size: 13px; font-weight: 700; color: #050505; margin-bottom: 12px; }
+  .calc-field-row { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .calc-field { flex: 1; min-width: 80px; }
+  .calc-field label { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: #EFA3C7; font-weight: 600; display: block; margin-bottom: 4px; }
+  .calc-card-item.green-item .calc-field label { color: #8aab8e; }
+  .calc-card-item.purple-item .calc-field label { color: #c084f5; }
+  .calc-input { width: 100%; padding: 8px 10px; border: 1.5px solid #FBDAE5; border-radius: 10px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; color: #050505; background: white; outline: none; transition: border 0.2s; margin: 0 !important; }
+  .calc-input:focus { border-color: #EFA3C7; box-shadow: 0 0 0 3px rgba(239,163,199,0.15); }
+  .green-input:focus { border-color: #8aab8e !important; box-shadow: 0 0 0 3px rgba(138,171,142,0.15) !important; }
+  .purple-input:focus { border-color: #c084f5 !important; box-shadow: 0 0 0 3px rgba(192,132,245,0.15) !important; }
+  .calc-result-strip { border-radius: 10px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; margin-top: 4px; }
+  .pink-strip { background: linear-gradient(135deg, #fff0f5, #FBDAE5); }
+  .green-strip { background: linear-gradient(135deg, #f0faf1, #d4e8d6); }
+  .purple-strip { background: linear-gradient(135deg, #faf5ff, #e2c5f5); }
+  .crs-label { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; font-weight: 600; color: #EFA3C7; }
+  .green-strip .crs-label { color: #8aab8e; }
+  .purple-strip .crs-label { color: #c084f5; }
+  .crs-val { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: #050505; }
 </style>
 </head>
 <body>
@@ -575,30 +606,131 @@
     <button class="btn-outline-add pink" onclick="addClientRow()">+ Agregar cliente</button>
   </div>
 
-  <!-- FULL: IA -->
-  <!-- CARD 10: IA -->
+  <!-- FULL: CALCULADORA DE NEGOCIOS -->
   <div class="card pink full">
-    <div class="card-icon">🤖</div><div class="card-label">Asistente IA</div>
-    <h2>Calculadora Inteligente</h2>
-    <p style="font-size:13px;color:var(--ink-soft);margin-bottom:20px">Pregúntame cualquier cálculo de tu negocio en lenguaje natural.</p>
-    <div style="display:flex;gap:10px;align-items:flex-end">
-      <div style="flex:1">
-        <label>Tu pregunta o cálculo</label>
-        <input type="text" id="aiQuestion" placeholder="Ej: ¿Cuánto es el 25% de 700?" onkeydown="if(event.key==='Enter')askAI()" style="margin:0;font-size:15px">
+    <div class="card-icon">🧮</div><div class="card-label">Calculadora de Negocios</div>
+    <h2>Calcula al Instante</h2>
+    <p style="font-size:13px;color:var(--ink-soft);margin-bottom:24px">Llena los campos y el resultado aparece solo — sin botones, sin esperar ✨</p>
+
+    <!-- PRECIOS Y MÁRGENES -->
+    <div class="calc-section-label">💰 Precios & Márgenes</div>
+    <div class="calc-grid">
+      <div class="calc-card-item">
+        <div class="calc-card-title">💰 Precio con margen</div>
+        <div class="calc-field-row">
+          <div class="calc-field"><label>Mi costo</label><input type="number" placeholder="80" oninput="cc_margin(this)" class="calc-input"></div>
+          <div class="calc-field"><label>Margen %</label><input type="number" placeholder="60" oninput="cc_margin(this)" class="calc-input"></div>
+        </div>
+        <div class="calc-result-strip pink-strip"><span class="crs-label">Precio ideal</span><span class="crs-val" id="cr_margin">—</span></div>
       </div>
-      <button class="btn-add" onclick="askAI()" id="aiBtn" style="padding:11px 24px;border-radius:12px;white-space:nowrap;margin-bottom:0">✦ Calcular</button>
+      <div class="calc-card-item">
+        <div class="calc-card-title">🏷️ Precio con descuento</div>
+        <div class="calc-field-row">
+          <div class="calc-field"><label>Precio original</label><input type="number" placeholder="150" oninput="cc_discount(this)" class="calc-input"></div>
+          <div class="calc-field"><label>Descuento %</label><input type="number" placeholder="20" oninput="cc_discount(this)" class="calc-input"></div>
+        </div>
+        <div class="calc-result-strip pink-strip"><span class="crs-label">Precio con descuento</span><span class="crs-val" id="cr_discount">—</span></div>
+      </div>
+      <div class="calc-card-item">
+        <div class="calc-card-title">📉 Si bajo el precio</div>
+        <div class="calc-field-row">
+          <div class="calc-field"><label>Precio actual</label><input type="number" placeholder="200" oninput="cc_lower(this)" class="calc-input"></div>
+          <div class="calc-field"><label>Bajo %</label><input type="number" placeholder="15" oninput="cc_lower(this)" class="calc-input"></div>
+        </div>
+        <div class="calc-result-strip pink-strip"><span class="crs-label">Pierdo por unidad</span><span class="crs-val" id="cr_lower">—</span></div>
+      </div>
     </div>
-    <div id="aiResult" style="display:none;margin-top:18px">
-      <div class="result-box hot"><div class="result-label">Resultado</div><div id="aiAnswer" style="font-size:16px;line-height:1.6;color:var(--ink);margin-top:4px"></div></div>
+
+    <!-- VENTAS E INGRESOS -->
+    <div class="calc-section-label" style="margin-top:24px">📦 Ventas & Ingresos</div>
+    <div class="calc-grid">
+      <div class="calc-card-item green-item">
+        <div class="calc-card-title">📦 Ingreso total</div>
+        <div class="calc-field-row">
+          <div class="calc-field"><label>Unidades vendidas</label><input type="number" placeholder="25" oninput="cc_income(this)" class="calc-input green-input"></div>
+          <div class="calc-field"><label>Precio c/u</label><input type="number" placeholder="120" oninput="cc_income(this)" class="calc-input green-input"></div>
+        </div>
+        <div class="calc-result-strip green-strip"><span class="crs-label">Ingreso total</span><span class="crs-val" id="cr_income">—</span></div>
+      </div>
+      <div class="calc-card-item green-item">
+        <div class="calc-card-title">🎯 Unidades para mi meta</div>
+        <div class="calc-field-row">
+          <div class="calc-field"><label>Mi meta mensual</label><input type="number" placeholder="5000" oninput="cc_units(this)" class="calc-input green-input"></div>
+          <div class="calc-field"><label>Precio c/u</label><input type="number" placeholder="120" oninput="cc_units(this)" class="calc-input green-input"></div>
+        </div>
+        <div class="calc-result-strip green-strip"><span class="crs-label">Unidades necesarias</span><span class="crs-val" id="cr_units">—</span></div>
+      </div>
     </div>
-    <div id="aiLoading" style="display:none;margin-top:18px;text-align:center;color:var(--ink-soft);font-size:13px"><span>🎀 Calculando…</span></div>
-    <div style="margin-top:16px">
-      <div style="font-size:11px;color:var(--ink-soft);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;opacity:0.7">Preguntas frecuentes</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button onclick="setQ('¿Cuánto es el 30% de 1500?')" class="quick-q">30% de 1500</button>
-        <button onclick="setQ('Si mi costo es 80 y quiero 60% de margen, ¿cuánto cobro?')" class="quick-q">Precio con margen</button>
-        <button onclick="setQ('Vendo 25 productos a 120 cada uno, ¿cuál es mi ingreso total?')" class="quick-q">Ingreso total</button>
-        <button onclick="setQ('Si gano 8500 al mes y gasto 3200, ¿cuánto me queda neto?')" class="quick-q">Ganancia neta</button>
+
+    <!-- ESPECIALES PAPELERÍA -->
+    <div class="calc-section-label" style="margin-top:24px">🎀 Especiales Papelería</div>
+    <div class="calc-grid">
+      <div class="calc-card-item purple-item">
+        <div class="calc-card-title">🎀 Precio justo de un set</div>
+        <div class="calc-field-row">
+          <div class="calc-field"><label>Costo materiales</label><input type="number" placeholder="45" oninput="cc_set(this)" class="calc-input purple-input"></div>
+          <div class="calc-field"><label>Minutos de trabajo</label><input type="number" placeholder="30" oninput="cc_set(this)" class="calc-input purple-input"></div>
+        </div>
+        <div class="calc-result-strip purple-strip"><span class="crs-label">Precio justo</span><span class="crs-val" id="cr_set">—</span></div>
+      </div>
+      <div class="calc-card-item purple-item">
+        <div class="calc-card-title">📄 Costo por hoja</div>
+        <div class="calc-field-row">
+          <div class="calc-field"><label>Hojas en el paquete</label><input type="number" placeholder="100" oninput="cc_sheet(this)" class="calc-input purple-input"></div>
+          <div class="calc-field"><label>Precio del paquete</label><input type="number" placeholder="80" oninput="cc_sheet(this)" class="calc-input purple-input"></div>
+        </div>
+        <div class="calc-result-strip purple-strip"><span class="crs-label">Costo por hoja</span><span class="crs-val" id="cr_sheet">—</span></div>
+      </div>
+      <div class="calc-card-item purple-item">
+        <div class="calc-card-title">🌀 Costo total washi tape</div>
+        <div class="calc-field-row">
+          <div class="calc-field"><label>Rollos comprados</label><input type="number" placeholder="5" oninput="cc_washi(this)" class="calc-input purple-input"></div>
+          <div class="calc-field"><label>Precio por rollo</label><input type="number" placeholder="35" oninput="cc_washi(this)" class="calc-input purple-input"></div>
+        </div>
+        <div class="calc-result-strip purple-strip"><span class="crs-label">Costo total</span><span class="crs-val" id="cr_washi">—</span></div>
+      </div>
+      <div class="calc-card-item purple-item">
+        <div class="calc-card-title">🌟 Ganancia por sticker</div>
+        <div class="calc-field-row">
+          <div class="calc-field"><label>Me cuesta hacer</label><input type="number" placeholder="5" oninput="cc_sticker(this)" class="calc-input purple-input"></div>
+          <div class="calc-field"><label>Lo vendo a</label><input type="number" placeholder="25" oninput="cc_sticker(this)" class="calc-input purple-input"></div>
+        </div>
+        <div class="calc-result-strip purple-strip"><span class="crs-label">Ganancia por sticker</span><span class="crs-val" id="cr_sticker">—</span></div>
+      </div>
+      <div class="calc-card-item purple-item">
+        <div class="calc-card-title">✂️ Diseños posibles de vinil</div>
+        <div class="calc-field-row">
+          <div class="calc-field"><label>Hojas de vinil que tengo</label><input type="number" placeholder="20" oninput="cc_vinyl(this)" class="calc-input purple-input"></div>
+          <div class="calc-field"><label>Hojas por diseño</label><input type="number" placeholder="2" oninput="cc_vinyl(this)" class="calc-input purple-input"></div>
+        </div>
+        <div class="calc-result-strip purple-strip"><span class="crs-label">Diseños que puedo hacer</span><span class="crs-val" id="cr_vinyl">—</span></div>
+      </div>
+      <div class="calc-card-item purple-item">
+        <div class="calc-card-title">📓 ¿Cuánto me cuesta una agenda?</div>
+        <div class="calc-field-row">
+          <div class="calc-field"><label>Hojas grandes compradas</label><input type="number" placeholder="50" oninput="cc_agenda(this)" class="calc-input purple-input" data-agenda="total"></div>
+          <div class="calc-field"><label>Costo total de las hojas</label><input type="number" placeholder="200" oninput="cc_agenda(this)" class="calc-input purple-input" data-agenda="price"></div>
+        </div>
+        <div class="calc-field-row" style="margin-top:0">
+          <div class="calc-field"><label>Hojas que usa cada agenda</label><input type="number" placeholder="5" oninput="cc_agenda(this)" class="calc-input purple-input" data-agenda="per"></div>
+        </div>
+        <div class="calc-result-strip purple-strip"><span class="crs-label">Costo por agenda</span><span class="crs-val" id="cr_agenda">—</span></div>
+      </div>
+      <div class="calc-card-item purple-item">
+        <div class="calc-card-title">🎁 Precio mínimo de un kit</div>
+        <div class="calc-field-row">
+          <div class="calc-field"><label>Costo total de las piezas</label><input type="number" placeholder="120" oninput="cc_kit(this)" class="calc-input purple-input"></div>
+          <div class="calc-field"><label>Ganancia que quiero %</label><input type="number" placeholder="60" oninput="cc_kit(this)" class="calc-input purple-input"></div>
+        </div>
+        <div class="calc-result-strip purple-strip"><span class="crs-label">Precio mínimo del kit</span><span class="crs-val" id="cr_kit">—</span></div>
+      </div>
+      <div class="calc-card-item purple-item">
+        <div class="calc-card-title">🏭 Costo por unidad producida</div>
+        <div class="calc-field-row">
+          <div class="calc-field"><label>Gasté en materiales</label><input type="number" placeholder="500" oninput="cc_unit(this)" class="calc-input purple-input"></div>
+          <div class="calc-field"><label>Unidades que hice</label><input type="number" placeholder="50" oninput="cc_unit(this)" class="calc-input purple-input"></div>
+        </div>
+        <div class="calc-result-strip purple-strip"><span class="crs-label">Costo por unidad</span><span class="crs-val" id="cr_unit">—</span></div>
       </div>
     </div>
   </div>
@@ -740,9 +872,7 @@
   function getStickies(){return Array.from(document.querySelectorAll('#stickyBoard .sticky')).map(s=>({title:s.querySelector('.sticky-title')?.value||'',body:s.querySelector('.sticky-body')?.value||'',colorIdx:parseInt(s.dataset.colorIdx)||0}));}
   function renderStickies(list){document.getElementById('stickyBoard').innerHTML='';stickyIdCounter=0;list.forEach(s=>addSticky(s.title,s.body,s.colorIdx));}
   function calcClients(){const rows=document.querySelectorAll('#clientList .inv-tr');let total=0;const byClient={};rows.forEach(row=>{const inputs=row.querySelectorAll('input');const name=(inputs[0]?.value||'').trim();const amount=parseFloat(inputs[2]?.value)||0;total+=amount;if(name)byClient[name]=(byClient[name]||0)+amount;});document.getElementById('clientCount').textContent=rows.length;document.getElementById('clientTotal').textContent=fmt(total);let topName='—',topAmt=0;Object.entries(byClient).forEach(([n,a])=>{if(a>topAmt){topAmt=a;topName=n;}});document.getElementById('topClient').textContent=topName+(topAmt>0?' · '+fmt(topAmt):'');}
-  function addClientRow(){const tbody=document.getElementById('clientList');const tr=document.createElement('tr');tr.className='inv-tr';tr.innerHTML=`<td><input type="text" class="inv-name" placeholder="Nombre del cliente" oninput="calcClients();triggerSave()"></td><td><input type="text" class="inv-name" placeholder="Producto comprado" oninput="triggerSave()"></td><td><input type="number" class="inv-qty" style="text-align:right" placeholder="0.00" oninput="calcClients();triggerSave()"></td><td class="client-date-col"><input type="text" class="inv-name" style="text-align:center" placeholder="dd/mm/aaaa" oninput="triggerSave()"></td><td><span class="row-del" onclick="this.closest('tr').remove();calcClients();triggerSave()">✕</span></td>`;tbody.appendChild(tr);calcClients();showToast('👥 Cliente agregado');}
-  function setQ(text){document.getElementById('aiQuestion').value=text;document.getElementById('aiQuestion').focus();}
-  async function askAI(){const q=document.getElementById('aiQuestion').value.trim();if(!q)return;document.getElementById('aiResult').style.display='none';document.getElementById('aiLoading').style.display='block';document.getElementById('aiBtn').disabled=true;document.getElementById('aiBtn').textContent='Calculando…';try{const response=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-calls':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,system:`Eres una calculadora de negocios para una tienda de papelería creativa. Moneda: ${currency.code} (${currency.symbol}). Responde en español, breve y claro. Resultado primero, explicación corta máximo 2 líneas. Sin markdown. Usa un emoji al inicio.`,messages:[{role:'user',content:q}]})});const data=await response.json();document.getElementById('aiAnswer').textContent=data.content?.[0]?.text||'No pude calcular eso.';document.getElementById('aiResult').style.display='block';}catch(e){document.getElementById('aiAnswer').textContent='❌ Error al conectar.';document.getElementById('aiResult').style.display='block';}document.getElementById('aiLoading').style.display='none';document.getElementById('aiBtn').disabled=false;document.getElementById('aiBtn').textContent='✦ Calcular';}
+  function addClientRow(){const tbody=document.getElementById('clientList');const tr=document.createElement('tr');tr.className='inv-tr';tr.innerHTML=`<td><input type="text" class="inv-name" placeholder="Nombre del cliente" oninput="calcClients();triggerSave()"></td><td><input type="text" class="inv-name" placeholder="Producto comprado" oninput="triggerSave()"></td><td><input type="number" class="inv-qty" style="text-align:right" placeholder="0.00" oninput="calcClients();triggerSave()"></td><td class="client-date-col"><input type="text" class="inv-name" style="text-align:center" placeholder="dd/mm/aaaa" oninput="triggerSave()"></td><td><span class="row-del" onclick="this.closest('tr').remove();calcClients();triggerSave()">✕</span></td>`;tbody.appendChild(tr);calcClients();showToast('👥 Cliente agregado');},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,system:`Eres una calculadora de negocios para una tienda de papelería creativa. Moneda: ${currency.code} (${currency.symbol}). Responde en español, breve y claro. Resultado primero, explicación corta máximo 2 líneas. Sin markdown. Usa un emoji al inicio.`,messages:[{role:'user',content:q}]})});const data=await response.json();document.getElementById('aiAnswer').textContent=data.content?.[0]?.text||'No pude calcular eso.';document.getElementById('aiResult').style.display='block';}catch(e){document.getElementById('aiAnswer').textContent='❌ Error al conectar.';document.getElementById('aiResult').style.display='block';}document.getElementById('aiLoading').style.display='none';document.getElementById('aiBtn').disabled=false;document.getElementById('aiBtn').textContent='✦ Calcular';}
   const SAVE_KEY='plannerPapeleria_v1';
   let saveTimer=null;
   function triggerSave(){clearTimeout(saveTimer);document.getElementById('autosaveBadge').classList.add('saving');document.getElementById('autosaveLabel').textContent='Guardando…';saveTimer=setTimeout(saveAll,800);}
@@ -758,6 +888,23 @@
   function exportAllDOC(){const s=getSelectedSections();if(!s.length){showToast('Selecciona al menos una sección');return;}const mn=document.getElementById('monthName').textContent;let c=`✿ REPORTE COMPLETO — ${mn} ✿\n${'='.repeat(38)}\nMoneda: ${currency.code}\n\n`;if(s.includes('ventas')){const m=parseFloat(document.getElementById('metaVentas').value)||0,a=parseFloat(document.getElementById('ventasActuales').value)||0;c+=`🎯 VENTAS & PROGRESO\n${'─'.repeat(36)}\nMeta: ${fmt(m)}\nVentas: ${fmt(a)}\nProgreso: ${m>0?(a/m*100).toFixed(0):0}%\nFaltante: ${fmt(Math.max(0,m-a))}\n\n`;}if(s.includes('finanzas')){const ing=(parseFloat(document.getElementById('ingOnline').value)||0)+(parseFloat(document.getElementById('ingFeria').value)||0)+(parseFloat(document.getElementById('ingCustom').value)||0)+(parseFloat(document.getElementById('ingOtros').value)||0);const gas=(parseFloat(document.getElementById('gastoMat').value)||0)+(parseFloat(document.getElementById('gastoEnvio').value)||0)+(parseFloat(document.getElementById('gastoPlat').value)||0)+(parseFloat(document.getElementById('gastoPub').value)||0);c+=`💰 FINANZAS\n${'─'.repeat(36)}\nIngresos: ${fmt(ing)}\nGastos: ${fmt(gas)}\nGanancia neta: ${fmt(ing-gas)}\n\n`;}if(s.includes('inventario')){c+=`📦 INVENTARIO\n${'─'.repeat(36)}\n`;document.querySelectorAll('#inventoryList .inv-tr').forEach((r,i)=>{const ins=r.querySelectorAll('input');const q=parseInt(ins[1]?.value)||0;c+=`${i+1}. ${ins[0]?.value||''}  |  Stock: ${q}  |  ${q===0?'AGOTADO':q<=5?'POCO':'OK'}\n`;});c+='\n';}if(s.includes('topventas')){const medals=['🥇','🥈','🥉'];c+=`⭐ TOP VENTAS\n${'─'.repeat(36)}\n`;document.querySelectorAll('#bestsellerList .bs-tr').forEach((r,i)=>{const n=r.querySelector('.bs-name-input')?.value||'',u=parseInt(r.querySelector('.bs-num')?.value)||0,p=parseFloat(r.querySelector('.bs-price')?.value)||0;c+=`${medals[i]||`${i+1}.`} ${n}  |  ${u} uds.  |  ${fmt(u*p)}\n`;});}c+=`\n${'='.repeat(38)}\nGenerado con Planner Papelería Creativa ✿\n`;dl(`reporte_${monthSlug()}.txt`,c);closeExportModal();showToast('📄 Reporte descargado');}
   function exportAllCSV(){const s=getSelectedSections();if(!s.length){showToast('Selecciona al menos una sección');return;}const mn=document.getElementById('monthName').textContent;let csv=`Reporte,${mn},${currency.code}\n\n`;if(s.includes('ventas')){const m=parseFloat(document.getElementById('metaVentas').value)||0,a=parseFloat(document.getElementById('ventasActuales').value)||0;csv+=`VENTAS\nConcepto,Valor\nMeta,${m}\nVentas,${a}\nProgreso,${m>0?(a/m*100).toFixed(1):0}%\n\n`;}if(s.includes('finanzas')){const ing=(parseFloat(document.getElementById('ingOnline').value)||0)+(parseFloat(document.getElementById('ingFeria').value)||0)+(parseFloat(document.getElementById('ingCustom').value)||0)+(parseFloat(document.getElementById('ingOtros').value)||0);const gas=(parseFloat(document.getElementById('gastoMat').value)||0)+(parseFloat(document.getElementById('gastoEnvio').value)||0)+(parseFloat(document.getElementById('gastoPlat').value)||0)+(parseFloat(document.getElementById('gastoPub').value)||0);csv+=`FINANZAS\nIngresos,${ing}\nGastos,${gas}\nNeta,${ing-gas}\n\n`;}if(s.includes('inventario')){csv+=`INVENTARIO\nProducto,Cantidad,Estado\n`;document.querySelectorAll('#inventoryList .inv-tr').forEach(r=>{const ins=r.querySelectorAll('input');const q=parseInt(ins[1]?.value)||0;csv+=`${ins[0]?.value||''},${q},${q===0?'Agotado':q<=5?'Poco':'OK'}\n`;});csv+='\n';}if(s.includes('topventas')){csv+=`TOP VENTAS\nRank,Producto,Unidades,Precio,Total\n`;document.querySelectorAll('#bestsellerList .bs-tr').forEach((r,i)=>{const n=r.querySelector('.bs-name-input')?.value||'',u=parseInt(r.querySelector('.bs-num')?.value)||0,p=parseFloat(r.querySelector('.bs-price')?.value)||0;csv+=`${i+1},${n},${u},${p},${(u*p).toFixed(2)}\n`;});}dl(`reporte_${monthSlug()}.csv`,csv,'text/csv');closeExportModal();showToast('📊 CSV descargado');}
 
+
+  // Calculadora de Negocios
+  function ccFmt(n){if(isNaN(n)||!isFinite(n)||n<0)return'—';return currency.symbol+n.toLocaleString('es-MX',{maximumFractionDigits:2})+' '+currency.code;}
+  function ccVals(el){const card=el.closest('.calc-card-item');return[...card.querySelectorAll('.calc-input')].map(i=>parseFloat(i.value)||0);}
+  function cc_margin(el){const[c,m]=ccVals(el);document.getElementById('cr_margin').textContent=c&&m&&m<100?ccFmt(c/(1-m/100)):'—';}
+  function cc_discount(el){const[p,d]=ccVals(el);document.getElementById('cr_discount').textContent=p&&d?ccFmt(p*(1-d/100)):'—';}
+  function cc_lower(el){const[p,pct]=ccVals(el);document.getElementById('cr_lower').textContent=p&&pct?ccFmt(p*pct/100):'—';}
+  function cc_income(el){const[u,p]=ccVals(el);document.getElementById('cr_income').textContent=u&&p?ccFmt(u*p):'—';}
+  function cc_units(el){const[meta,p]=ccVals(el);document.getElementById('cr_units').textContent=meta&&p?Math.ceil(meta/p)+' unidades':'—';}
+  function cc_set(el){const[mat,min]=ccVals(el);const tc=(min/60)*120;document.getElementById('cr_set').textContent=(mat||min)?ccFmt((mat+tc)*1.6):'—';}
+  function cc_sheet(el){const[h,p]=ccVals(el);document.getElementById('cr_sheet').textContent=h&&p?ccFmt(p/h):'—';}
+  function cc_washi(el){const[r,p]=ccVals(el);document.getElementById('cr_washi').textContent=r&&p?ccFmt(r*p):'—';}
+  function cc_sticker(el){const[c,v]=ccVals(el);document.getElementById('cr_sticker').textContent=c&&v?ccFmt(v-c):'—';}
+  function cc_vinyl(el){const[h,d]=ccVals(el);document.getElementById('cr_vinyl').textContent=h&&d?Math.floor(h/d)+' diseños':'—';}
+  function cc_agenda(el){const card=el.closest('.calc-card-item');const total=parseFloat(card.querySelector('[data-agenda="total"]')?.value)||0;const price=parseFloat(card.querySelector('[data-agenda="price"]')?.value)||0;const per=parseFloat(card.querySelector('[data-agenda="per"]')?.value)||0;document.getElementById('cr_agenda').textContent=total&&price&&per?ccFmt((price/total)*per):'—';}
+  function cc_kit(el){const[c,m]=ccVals(el);document.getElementById('cr_kit').textContent=c&&m&&m<100?ccFmt(c/(1-m/100)):'—';}
+  function cc_unit(el){const[g,u]=ccVals(el);document.getElementById('cr_unit').textContent=g&&u?ccFmt(g/u):'—';}
   // INIT
   updateMonth();
   loadAll();
