@@ -560,57 +560,133 @@
 <body>
 
 <!-- ═══ PANTALLA DE ACCESO ═══ -->
+
+<!-- ═══ FIREBASE AUTH ═══ -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCVphuCQQm39olTDYKv24kLURcvP5Ov1ww",
+    authDomain: "planificador-de-papele.firebaseapp.com",
+    projectId: "planificador-de-papele",
+    storageBucket: "planificador-de-papele.firebasestorage.app",
+    messagingSenderId: "642988143918",
+    appId: "1:642988143918:web:7ae1a8f918d83fa3c4b6bf"
+  };
+
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db   = getFirestore(app);
+
+  function hideLock() {
+    const lock = document.getElementById('lockScreen');
+    lock.style.opacity = '0';
+    lock.style.transition = 'opacity 0.4s';
+    setTimeout(() => lock.style.display = 'none', 400);
+  }
+
+  // Si ya tiene sesión activa, entra directo al recargar
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      try {
+        const snap = await getDoc(doc(db, "usuarios", user.uid));
+        if (snap.exists() && snap.data().acceso) {
+          hideLock();
+        } else {
+          await signOut(auth);
+        }
+      } catch(e) {
+        await signOut(auth);
+      }
+    }
+  });
+
+  window.loginUsuario = async () => {
+    const email    = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const errEl    = document.getElementById('pwError');
+    const btn      = document.getElementById('loginBtn');
+    errEl.style.display = 'none';
+    btn.textContent = '⏳ Verificando…';
+    btn.disabled = true;
+
+    try {
+      const cred = await signInWithEmailAndPassword(auth, email, password);
+      const snap = await getDoc(doc(db, "usuarios", cred.user.uid));
+
+      if (!snap.exists() || !snap.data().acceso) {
+        await signOut(auth);
+        errEl.textContent = "⛔ Tu acceso no está activado. Contacta a Joha.";
+        errEl.style.display = 'block';
+        btn.textContent = '✦ Ingresar al Planner';
+        btn.disabled = false;
+        return;
+      }
+      hideLock();
+
+    } catch (err) {
+      errEl.textContent = "🔒 Email o contraseña incorrectos.";
+      errEl.style.display = 'block';
+      btn.textContent = '✦ Ingresar al Planner';
+      btn.disabled = false;
+    }
+  };
+</script>
+
+<!-- ═══ FIREBASE AUTH ═══ -->
 <div id="lockScreen" style="position:fixed;inset:0;z-index:9999;background:linear-gradient(160deg,#FBDAE5 0%,#ffffff 55%,#FCBDD7 100%);display:flex;align-items:center;justify-content:center;padding:20px">
 
   <div style="background:white;border-radius:28px;padding:40px 36px;max-width:400px;width:100%;box-shadow:0 20px 60px rgba(239,163,199,0.25);border:1.5px solid #FBDAE5;text-align:center;position:relative;overflow:hidden">
 
-    <!-- Franja top -->
     <div style="position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,#FBDAE5,#EFA3C7,#FCBDD7)"></div>
-
-    <!-- Emojis deco -->
     <div style="font-size:26px;margin-bottom:16px;letter-spacing:8px">🌸 ✿ 🌸</div>
-
-    <!-- Logo/marca -->
     <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#EFA3C7;font-weight:600;margin-bottom:8px">Joha Digital Seattle</div>
     <h1 style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:#050505;line-height:1.2;margin-bottom:6px">
       Planner <em style="color:#EFA3C7;font-style:italic">Papelería Creativa</em>
     </h1>
     <p style="font-size:13px;color:#96989A;margin-bottom:28px;line-height:1.5">Herramienta exclusiva para emprendedoras creativas ✦</p>
 
-    <!-- Divider -->
     <div style="height:1px;background:linear-gradient(90deg,transparent,#FBDAE5,transparent);margin-bottom:26px"></div>
 
-    <!-- Campo contraseña -->
-    <div style="margin-bottom:14px;text-align:left">
-      <label style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#EFA3C7;font-weight:600;display:block;margin-bottom:8px">Contraseña de acceso</label>
-      <div style="position:relative">
-        <input id="pwInput" type="password" placeholder="••••••••••••" onkeydown="if(event.key==='Enter')checkPw()"
-          style="width:100%;padding:13px 46px 13px 16px;border:1.5px solid #FBDAE5;border-radius:14px;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;color:#050505;outline:none;background:#fdf6f9;transition:all 0.2s"
-          onfocus="this.style.borderColor='#EFA3C7';this.style.boxShadow='0 0 0 3px rgba(239,163,199,0.15)'"
-          onblur="this.style.borderColor='#FBDAE5';this.style.boxShadow='none'">
-        <!-- Ojo toggle -->
-        <button onclick="togglePw()" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:16px;color:#EFA3C7" id="eyeBtn">👁</button>
-      </div>
-      <div id="pwError" style="display:none;margin-top:8px;font-size:12px;color:#c4698f;font-weight:500;padding:8px 12px;background:#fff0f5;border-radius:8px;border-left:3px solid #EFA3C7">
-        🔒 Contraseña incorrecta. ¿Aún no tienes acceso?
-      </div>
+    <!-- Email -->
+    <div style="margin-bottom:12px;text-align:left">
+      <label style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#EFA3C7;font-weight:600;display:block;margin-bottom:8px">Email</label>
+      <input id="loginEmail" type="email" placeholder="tu@email.com"
+        style="width:100%;padding:13px 16px;border:1.5px solid #FBDAE5;border-radius:14px;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;color:#050505;outline:none;background:#fdf6f9;transition:all 0.2s;box-sizing:border-box"
+        onfocus="this.style.borderColor='#EFA3C7';this.style.boxShadow='0 0 0 3px rgba(239,163,199,0.15)'"
+        onblur="this.style.borderColor='#FBDAE5';this.style.boxShadow='none'"
+        onkeydown="if(event.key==='Enter')document.getElementById('loginPassword').focus()">
     </div>
 
-    <!-- Botón entrar -->
-    <button onclick="checkPw()" style="width:100%;padding:14px;border-radius:16px;border:none;background:linear-gradient(135deg,#EFA3C7,#FCBDD7);color:white;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(239,163,199,0.4);transition:all 0.2s;letter-spacing:0.3px;margin-bottom:14px"
-      onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 28px rgba(239,163,199,0.5)'"
-      onmouseout="this.style.transform='none';this.style.boxShadow='0 6px 20px rgba(239,163,199,0.4)'">
+    <!-- Contraseña -->
+    <div style="margin-bottom:14px;text-align:left">
+      <label style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#EFA3C7;font-weight:600;display:block;margin-bottom:8px">Contraseña</label>
+      <input id="loginPassword" type="password" placeholder="••••••••••••"
+        style="width:100%;padding:13px 16px;border:1.5px solid #FBDAE5;border-radius:14px;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;color:#050505;outline:none;background:#fdf6f9;transition:all 0.2s;box-sizing:border-box"
+        onfocus="this.style.borderColor='#EFA3C7';this.style.boxShadow='0 0 0 3px rgba(239,163,199,0.15)'"
+        onblur="this.style.borderColor='#FBDAE5';this.style.boxShadow='none'"
+        onkeydown="if(event.key==='Enter')loginUsuario()">
+      <div id="pwError" style="display:none;margin-top:8px;font-size:12px;color:#c4698f;font-weight:500;padding:8px 12px;background:#fff0f5;border-radius:8px;border-left:3px solid #EFA3C7"></div>
+    </div>
+
+    <!-- Botón -->
+    <button id="loginBtn" onclick="loginUsuario()"
+      style="width:100%;padding:14px;border-radius:16px;border:none;background:linear-gradient(135deg,#EFA3C7,#FCBDD7);color:white;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(239,163,199,0.4);transition:all 0.2s;letter-spacing:0.3px;margin-bottom:14px"
+      onmouseover="this.style.transform='translateY(-2px)'"
+      onmouseout="this.style.transform='none'">
       ✦ Ingresar al Planner
     </button>
 
-    <!-- Divider -->
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
       <div style="flex:1;height:1px;background:#f0e8f0"></div>
       <span style="font-size:11px;color:#c0a0b0;letter-spacing:1px">¿Sin acceso?</span>
       <div style="flex:1;height:1px;background:#f0e8f0"></div>
     </div>
 
-    <!-- Botón tienda -->
     <a href="https://johadigitalseattle.com" target="_blank"
       style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;border-radius:16px;border:1.5px solid #FBDAE5;background:white;color:#c4698f;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;text-decoration:none;transition:all 0.2s;box-sizing:border-box"
       onmouseover="this.style.background='#fdf6f9';this.style.borderColor='#EFA3C7'"
@@ -620,39 +696,6 @@
 
     <p style="font-size:11px;color:#E0E0E0;margin-top:18px;letter-spacing:0.5px">© 2026 Joha Digital Seattle · Todos los derechos reservados</p>
   </div>
-</div>
-
-<script>
-  // Verificar si ya tiene sesión activa
-  if (sessionStorage.getItem('plannerAccess') === 'ok') {
-    document.getElementById('lockScreen').style.display = 'none';
-  }
-  function checkPw() {
-    const val = document.getElementById('pwInput').value;
-    if (val === 'jocreativa26') {
-      sessionStorage.setItem('plannerAccess', 'ok');
-      const lock = document.getElementById('lockScreen');
-      lock.style.opacity = '0';
-      lock.style.transition = 'opacity 0.4s';
-      setTimeout(() => lock.style.display = 'none', 400);
-    } else {
-      const err = document.getElementById('pwError');
-      err.style.display = 'block';
-      const input = document.getElementById('pwInput');
-      input.style.borderColor = '#c4698f';
-      input.value = '';
-      input.focus();
-      setTimeout(() => {
-        err.style.display = 'none';
-        input.style.borderColor = '#FBDAE5';
-      }, 3000);
-    }
-  }
-  function togglePw() {
-    const inp = document.getElementById('pwInput');
-    inp.type = inp.type === 'password' ? 'text' : 'password';
-  }
-</script>
 
 <header>
   <div class="header-hero">
